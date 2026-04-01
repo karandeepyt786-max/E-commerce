@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+:root{
+--LogoSize:30px
+}
+
+.volkhov{
+    font-family: "Volkhov", serif;
+}
+
