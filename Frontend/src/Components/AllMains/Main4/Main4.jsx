@@ -1,64 +1,43 @@
 import React from 'react'
 import Main4Products from './Main4Products'
 
+import { useState } from 'react';
+import axios from "axios"
+import { useEffect } from 'react';
+
 const Main4 = () => {
 
-let ProductData=[
-    {
-        name:"Shiny",
-        rating:4,
-        reviews:"44.1",
-        Price:"$100",
-        stock:true,
-        Offer:"10%",
-        ImageUrl:"../Main4/image1.png"
-    },
-    {
-        name:"Long Dress",
-        rating:5,
-        reviews:"44.1",
-        Price:"$100",
-        stock:false,
-        Offer:"",
-        ImageUrl:"../Main4/image2.png"
-    },
-    {
-        name:"Full Sweater",
-        rating:3,
-        reviews:"44.1",
-        Price:"$50",
-        stock:true,
-        Offer:"",
-        ImageUrl:"../Main4/image3.png"
-    },
-    {
-        name:"White Dress",
-        rating:5,
-        reviews:"99.1",
-        Price:"$120",
-        stock:false,
-        Offer:"",
-        ImageUrl:"../Main4/image4.png"
-    },
-    {
-        name:"Colorfull Dress",
-        rating:5,
-        reviews:"44.1",
-        Price:"$500",
-        stock:true,
-        Offer:"",
-        ImageUrl:"../Main4/image5.png"
-    },
-    {
-        name:"White Shirt",
-        rating:5,
-        reviews:"44.1",
-        Price:"$100",
-        stock:false,
-        Offer:"10%",
-        ImageUrl:"../Main4/image6.png"
-    },
-]
+
+
+
+
+
+        const [products, setproducts] = useState([]);
+
+    const GetAllProducts = async () => {
+        try {
+            const res = await axios.get("http://localhost:3000/Admin/GetAllProducts");
+            setproducts(res.data);
+        } catch (err) {
+            console.log("GetAllProducts error ", err);
+        }
+    };
+
+    useEffect(() => {
+        GetAllProducts();
+    }, []); // ✅ only fetch once
+
+    // ✅ separate effect to track data changes
+    useEffect(() => {
+        console.log("Updated products:", products);
+    }, [products]);
+
+
+
+
+
+
+
 
   return (
     <div className='w-[65%]  flex flex-col items-center gap-3 pb-10'>
@@ -74,13 +53,14 @@ let ProductData=[
             </div>
         </div>
      
-        <div className="Main4Box2 flex bg-[#F5F5F5] justify-around  mt-1 flex-wrap p-2 gap-2 rounded-2xl ">
+        <div className="Main4Box2  h-275 overflow-hidden flex bg-[#F5F5F5] justify-around  mt-1 flex-wrap p-2 gap-1 rounded-2xl ">
 
-            {
-                ProductData.map((ite)=>(
-                    <Main4Products Offer={ite.Offer} name={ite.name} rating={ite.rating} Price={ite.Price} reviews={ite.reviews} stock={ite.stock} Size={ite.Size} ImageUrl={ite.ImageUrl}/>
-                ))
-            }
+          {
+            products.map((ite)=>(
+
+                <Main4Products ProductRating={ite.ProductRating} ProductPrice={ite.ProductPrice} ProductSale={ite.ProductSale} ProductStock={ite.ProductStock} ProductReviews={ite.ProductReviews} ProductBrand={ite.ProductBrand} ProductImage={ite.ProductImage} ProductName={ite.ProductName}/>
+            ))
+        }
 
 
         </div>
@@ -90,3 +70,68 @@ let ProductData=[
 }
 
 export default Main4
+
+
+
+
+
+
+
+
+
+// let ProductData=[
+//     {
+//         name:"Shiny",
+//         rating:4,
+//         reviews:"44.1",
+//         Price:"$100",
+//         stock:true,
+//         Offer:"10%",
+//         ImageUrl:"../Main4/image1.png"
+//     },
+//     {
+//         name:"Long Dress",
+//         rating:5,
+//         reviews:"44.1",
+//         Price:"$100",
+//         stock:false,
+//         Offer:"",
+//         ImageUrl:"../Main4/image2.png"
+//     },
+//     {
+//         name:"Full Sweater",
+//         rating:3,
+//         reviews:"44.1",
+//         Price:"$50",
+//         stock:true,
+//         Offer:"",
+//         ImageUrl:"../Main4/image3.png"
+//     },
+//     {
+//         name:"White Dress",
+//         rating:5,
+//         reviews:"99.1",
+//         Price:"$120",
+//         stock:false,
+//         Offer:"",
+//         ImageUrl:"../Main4/image4.png"
+//     },
+//     {
+//         name:"Colorfull Dress",
+//         rating:5,
+//         reviews:"44.1",
+//         Price:"$500",
+//         stock:true,
+//         Offer:"",
+//         ImageUrl:"../Main4/image5.png"
+//     },
+//     {
+//         name:"White Shirt",
+//         rating:5,
+//         reviews:"44.1",
+//         Price:"$100",
+//         stock:false,
+//         Offer:"10%",
+//         ImageUrl:"../Main4/image6.png"
+//     },
+// ]

@@ -12,14 +12,14 @@ import Main8 from '../AllMains/Main8/Main8'
 const Main = () => {
   return (
     <div className='flex flex-col items-center '>
-   <Main1/>
-<Main2/>    
-<Main3/>
-<Main4/>
-<Main5/>
-<Main6/>
-<Main7/>
-<Main8/>
+      <Main1 />
+      <Main2 />
+      <Main3 />
+      <Main4 />
+      <Main5 />
+      <Main6 />
+      <Main7 />
+      <Main8 />
     </div>
   )
 }

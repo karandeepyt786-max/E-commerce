@@ -18,9 +18,9 @@ const isExist=await AdminSignUp.findOne({emailAddress:Email})
 
 let token=jwt.sign({email:Email},"key")
 
-const compare=await bcrypt.compare("z","$2b$10$qXlC.5AIUmvHWooXTN98Te4cvmPz8OVBz5pLHpLZa14x.IiUrEeXi")
+// const compare=await bcrypt.compare("z","$2b$10$qXlC.5AIUmvHWooXTN98Te4cvmPz8OVBz5pLHpLZa14x.IiUrEeXi")
 
-console.log("compare ",compare)
+// console.log("compare ",compare)
 
 
 
@@ -97,13 +97,119 @@ const Logout=async(req,res)=>{
     res.status(200).send("successfully delete the cookie")
 }
 
-export default {createAdmin,signinAdmin,loginoutAdmin,Logout}
 
-// from usre  {
-//   firstName: 's',
-//   lastName: 's',
-//   Email: 's',
-//   Phone: '1111111111',
-//   Password: 's',
-//   confirmPassword: 's'
+
+const CreateProduct=async(req,res)=>{
+
+ try {
+    const {
+      BrandName,
+      ProductName,
+      ProductPrice,
+      ProductCategory,
+      CreatorAdmin,
+      Size,
+      ProductColors,
+      ProductCode,
+      ProductStock,
+       ProductTags
+    } = req.body;
+
+    // ✅ check image
+    if (!req.file) {
+      return res.status(400).send("Product image is required");
+    }
+
+    // ✅ create image path (frontend will use this)
+    const imagePath = `${req.file.filename}`;
+
+    // let Allusers=await AdminSignUp.findOne()
+
+    // console.log("Admin Products are ",Allusers)
+    await AdminSignUp.updateOne(
+      { emailAddress: CreatorAdmin },
+      {
+        $push: {
+          ProductsCreated: {
+            ProductCreatorEmail: CreatorAdmin,
+            ProductBrand: BrandName,
+            ProductName: ProductName,
+            ProductImage: imagePath, // ✅ added here
+            ProductPrice: ProductPrice,
+            ProductCategory: ProductCategory, // ✅ fix typo
+            ProductSale: 0,
+            ProductRating: 0,
+            ProductReviews: 0,
+            ProductStock: ProductStock,
+            SizeAvailable: Size,
+            ColorAvailable: ProductColors,
+            Tags: ProductTags,
+            DiscountCode:ProductCode,
+          }
+        }
+      }
+    );
+
+    res.status(200).send("Product created successfully");
+  } catch (err) {
+    console.log("Create Product Error:", err);
+    res.status(500).send("Server error");
+  }
+console.log("everything about creation ",req.body)
+}
+
+const GetAllProducts=async(req,res)=>{
+try{
+const admins = await AdminSignUp.find();
+
+const allProducts = admins.flatMap((admin) => (admin.ProductsCreated))
+// console.log(admins[0].ProductsCreated[0].ProductPrice)
+
+res.send(allProducts);
+}
+catch(err){
+    res.send("getallproducts errr is ",err)
+}
+
+}
+
+const GetOneProduct=async(req,res)=>{
+
+  // const OneUser=await AdminSignUp.find()
+
+const{ProductName}=req.body
+
+try{
+  const Alladmins=await AdminSignUp.find({},{ProductsCreated:1})
+const AllProduct=Alladmins.flatMap((admin)=>(admin.ProductsCreated)).find((p) => p.ProductName === ProductName);
+res.send(AllProduct)
+}
+
+catch(error){
+
+  console.log("One Product Errror")
+}
+}
+
+
+
+export default {createAdmin,signinAdmin,loginoutAdmin,Logout,CreateProduct,GetAllProducts,GetOneProduct}
+
+// everything about creation  [Object: null prototype] {
+  //   BrandName: 'dvsdvs',
+  //   ProductName: 'aqswswd',
+  //   ProductPrice: '111',
+//   CreatorAdmin: 'karan',
+//   ProductCategory: 'Clothes',
+
+//   Size: [ 'S', 'M', 'L', 'XL' ],
+//   ProductColors: [
+//     'red   ', 'blue  ',
+//     'green ', 'pink  ',
+//     'gray  ', 'black ',
+//     'orange', 'cyan  ',
+//     'cyan  '
+//   ],
+//   ProductCode: '14005678352210',
+//   ProductStock: '2'
 // }

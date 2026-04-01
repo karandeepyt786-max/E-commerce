@@ -20,7 +20,8 @@ const Layout = () => {
             location.pathname ==="/Thumbnail" ||
             location.pathname ==="/AdminProfile" 
             
-            ?"":location.pathname === "/"  ? <Nav /> : <Nav2 />}
+            ?"":location.pathname === "/"  ? <Nav /> : <Nav2 />
+            }
           
            
         </div>

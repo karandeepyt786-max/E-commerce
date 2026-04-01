@@ -35,16 +35,16 @@ if(hash && !isExist){
 
 console.log("user created")
 res.cookie("token",token,{
-    httpOnly: true,    // Required for security
-    secure: false,     // REQUIRED for http://localhost (Chrome blocks 'true' on HTTP)
-    sameSite: 'lax',   // REQUIRED for cross-port (5173 to 3000)
-    path: '/',         // REQUIRED to make it available to all routes
-}   )
-res.status(200).send("user created")
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax',
+    path: '/',
+})
+return res.status(200).json({status:200, message:"user created", user:User})
 }
 else{
     console.log("already exist")
-    res.status(300).send("user already exist ")
+    return res.status(409).json({status:409, message:"user already exist"})
 }
 
 }
@@ -70,11 +70,11 @@ else{
 }
 
 const loginout=async(req,res)=>{
-// console.log("token is ",req.cookies.token)
+console.log("token is ",req.cookies.token)
 
 let Istoken=jwt.verify(req.cookies.token,"key")
 
-// console.log(Istoken.email)
+console.log(Istoken.email)
 
 let userdata=await userSignUp.findOne({emailAddress:Istoken.email})
 
@@ -103,3 +103,6 @@ export default {createUser,signinUser,loginout,Logout}
 //   Password: 's',
 //   confirmPassword: 's'
 // }
+
+// D:\Coading\NewReactProject\Backend\server.js
+//   53,24: app.listen(process.env.SERVER_PORT)

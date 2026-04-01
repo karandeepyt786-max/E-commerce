@@ -4,7 +4,8 @@ const AdminSlice=createSlice({
     name:"Admin",
     initialState:{
         value:100,
-        Admin:[]
+        Admin:[],
+        SingleProduct:[]
     },
     reducers:{
         AdminStatus:(state,data)=>{
@@ -14,11 +15,14 @@ const AdminSlice=createSlice({
        AdminData:(state,action)=>{
 state.Admin.push(action.payload.Details)
 // state.User.length>1?state.User=[]:""
-
-        }
+        },
+   setSingleProduct: (state, action) => {
+      state.SingleProduct = action.payload.Product; // directly assign object
+      console.log("single product is",state.SingleProduct);
+    },
     }
 })
 
 
-export const {AdminStatus,AdminData}=AdminSlice.actions
+export const {AdminStatus,AdminData,setSingleProduct}=AdminSlice.actions
 export default AdminSlice.reducer

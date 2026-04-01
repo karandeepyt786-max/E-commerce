@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Left = () => {
+const Left = (props) => {
   return (
     <div className='w-[40%] h-110   flex '>
       <div className="Left h-[100%]">
@@ -29,7 +29,7 @@ const Left = () => {
         </div>
       </div>
       <div className="Right w-[80%] ml-2">
-        <img src="../Routes/Shop/Right/image1.png" className='w-[100%] h-[100%]' alt="" srcset="" />
+        <img src={`http://localhost:3000/Products/${props.imgSrc}`} className='w-[100%] h-[100%] contain' alt="" srcset="" />
       </div>
     </div>
   )

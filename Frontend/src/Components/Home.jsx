@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Nav from './HomeThreeComponents/Nav'
 import Main from './HomeThreeComponents/Main'
 import Footer from './HomeThreeComponents/Footer'
@@ -11,32 +11,31 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const Home = () => {
 
-  const dispatch=useDispatch()
-  const userData=useSelector(state=>state.User.User)
 
-  const isLogInOut=async()=>{
-    try{
-    await   axios.post("http://localhost:3000/user/isLoginOut",{},{withCredentials:true}).then((data)=>{
-let resposeuserdata=data.data.data
- console.log("loginout response ",dispatch(Userstatus({status:data.status})))
-        dispatch(UserData({Details:resposeuserdata}))
-   })
+  const dispatch = useDispatch()
+  const userData = useSelector(state => state.User.User)
+
+  const isLogInOut = async () => {
+    try {
+      await axios.post("http://localhost:3000/user/isLoginOut", {}, { withCredentials: true }).then((data) => {
+        let resposeuserdata = data.data.data
+        dispatch(UserData({ Details: resposeuserdata }))
+        console.log("loginout response ", dispatch(Userstatus({ status: data.status })))
+      })
     }
-    catch(err){
-      console.log("loginout error ",err)
+    catch (err) {
+      console.log("loginout error ", err)
     }
   }
 
-
-
-  useEffect(()=>{
+  useEffect(() => {
     isLogInOut()
-  },[])
+  }, [])
+
   return (
     <div className='w-screen h-auto '>
-   
-        <Main/>
-</div>
+      <Main />
+    </div>
   )
 }
 

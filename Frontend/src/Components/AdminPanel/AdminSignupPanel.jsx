@@ -4,38 +4,39 @@ import axios from "axios"
 const AdminSignupPanel = () => {
     const navigate = useNavigate()
 
-const SubmitHandler=async(e)=>{
-    e.preventDefault()
-  const formData=new FormData(e.target)
+    const SubmitHandler = async (e) => {
+        e.preventDefault()
 
-   if (formData ) {
-              try {
-                  await axios.post("http://localhost:3000/Admin/signup",
-                      {
-                          firstName: formData.get("firstName"),
-                          lastName: formData.get("lastName"),
-                          Email: formData.get("Email"),
-                          Phone: formData.get("Phone"),
-                          Password: formData.get("Password"),
-                          confirmPassword: formData.get("confirmPassword"),
-                      }, { withCredentials: true }).then((data) => {
-                          let status = data.status
-                          console.log(status)
-                          navigate("/AdminProfile")
-  
-                      }).catch((err) => {
-                          let status = err.status
-                          console.log(status)
-                      })
-                  console.log("data send")
-  
-              }
-              catch (err) {
-                  console.log("axios error is ", err)
-              }
-          }
+        const formData = new FormData(e.target)
 
-}
+        if (formData) {
+            try {
+                await axios.post("http://localhost:3000/Admin/signup",
+                    {
+                        firstName: formData.get("firstName"),
+                        lastName: formData.get("lastName"),
+                        Email: formData.get("Email"),
+                        Phone: formData.get("Phone"),
+                        Password: formData.get("Password"),
+                        confirmPassword: formData.get("confirmPassword"),
+                    }, { withCredentials: true }).then((data) => {
+                        let status = data.status
+                        console.log(status)
+                        navigate("/AdminProfile")
+
+                    }).catch((err) => {
+                        let status = err.status
+                        console.log(status)
+                    })
+                console.log("data send")
+
+            }
+            catch (err) {
+                console.log("axios error is ", err)
+            }
+        }
+
+    }
 
     return (
         <div className='w-[100%] h-[100vh]  flex justify-center items-center '>
@@ -63,25 +64,25 @@ const SubmitHandler=async(e)=>{
                         </div>
                         <div className="Or text-[20px] text-gray-500 font-bold text-center pb-10 pt-13">- OR -</div>
 
-                        <form action="" onSubmit={(e)=>{SubmitHandler(e)}}>
+                        <form action="" onSubmit={(e) => { SubmitHandler(e) }}>
                             <div className="Inputs flex flex-col gap-4 ">
 
-                            <div className="Line1 flex justify-between gap-2 w-[100%] ">
-                                <input type="text" name='firstName'  className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='First Name' />
-                                <input type="text"  name='lastName' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Last Name' />
+                                <div className="Line1 flex justify-between gap-2 w-[100%] ">
+                                    <input type="text" name='firstName' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='First Name' />
+                                    <input type="text" name='lastName' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Last Name' />
+                                </div>
+                                <div className="Line2">
+                                    <input type="text" name='Email' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Email Adress' />
+                                    <input type="tel" maxLength={10} pattern="[0-9]{10}" name='Phone' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Phone Number' />
+                                </div>
+                                <div className="Line3">
+                                    <input type="text" name='Password' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Pasword' />
+                                    <input type="text" name='confirmPassword' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Confirm Password' />
+                                </div>
                             </div>
-                            <div className="Line2">
-                                <input type="text" name='Email' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Email Adress' />
-                                <input type="tel" maxLength={10} pattern="[0-9]{10}" name='Phone' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Phone Number' />
-                            </div>
-                            <div className="Line3">
-                                <input type="text"  name='Password' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Pasword' />
-                                <input type="text" name='confirmPassword' className=' w-[50%] border-b-1 focus:outline-none border-b-gray-300 text-gray-800 text-[10px] pb-1' placeholder='Confirm Password' />
-                            </div>
-                        </div>
 
-                        <div className="Btns">
-                            <input type='submit' value={"Create Account"} className="checkoutButton text-center mt-6 bg-black text-white w-[90%] h-10 flex items-center justify-center rounded mx-auto shadow-2xl text-[12px]"/>
+                            <div className="Btns">
+                                <input type='submit' value={"Create Account"} className="checkoutButton text-center mt-6 bg-black text-white w-[90%] h-10 flex items-center justify-center rounded mx-auto shadow-2xl text-[12px]" />
                             </div>
 
                         </form>

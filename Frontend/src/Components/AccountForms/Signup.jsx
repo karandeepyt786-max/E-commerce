@@ -9,10 +9,16 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const Signup = () => {
     const Dispatch = useDispatch()
+
     const SelectorData = useSelector(state => state.User.value)
 
     const navigate = useNavigate()
 
+    React.useEffect(() => {
+        if (SelectorData === 200) {
+            navigate("/")
+        }
+    }, [SelectorData, navigate])
 
     const formHandler = async (e) => {
         e.preventDefault(); console.log("submit")
@@ -34,10 +40,11 @@ const Signup = () => {
                         Password: formData.get("Password"),
                         confirmPassword: formData.get("confirmPassword"),
                     }, { withCredentials: true }).then((data) => {
+
+                        navigate("/")
                         let status = data.status
                         console.log(status)
                         status && Dispatch(Userstatus({ status: status }))
-
                     }).catch((err) => {
                         let status = err.status
                         console.log(status)
@@ -102,9 +109,9 @@ const Signup = () => {
                                 </div>
 
                             </div>
-                            {SelectorData ? 
-                            SelectorData == 300 ? <div className=' w-40 flex items-center justify-center py-2 rounded font-bold mt-2 text-red-500'>User Already Exist</div> :SelectorData == 200?  (<div className=' w-40 flex items-center justify-center py-2 rounded font-bold mt-2 text-green-500'>User Created</div> ):"": ""}
-                            {   SelectorData==200?navigate("/"):""}
+                            {/* {SelectorData ? 
+                            SelectorData == 300 ? <div className=' w-40 flex items-center justify-center py-2 rounded font-bold mt-2 text-red-500'>User Already Exist</div> :SelectorData == 200?  (<div className=' w-40 flex items-center justify-center py-2 rounded font-bold mt-2 text-green-500'>User Created</div> ):"": ""} */}
+                            {/* {   SelectorData==200?navigate("/"):""} */}
                             <div className="Btns">
                                 <input type='submit' value={"Create Account"} className="checkoutButton mt-6 bg-black text-white w-[90%] h-10 flex items-center justify-center rounded mx-auto shadow-2xl text-[12px]" />
                             </div>

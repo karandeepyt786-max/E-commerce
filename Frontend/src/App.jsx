@@ -15,6 +15,7 @@ import AdminSigninPanel from './Components/AdminPanel/AdminSigninPanel'
 import AdminSignupPanel from './Components/AdminPanel/AdminSignupPanel'
 import AdminProfile from './Components/AdminPanel/AdminProfile'
 import CreateProduct from './Components/AdminPanel/CreateProduct'
+import AdminAllProducts from './Components/AdminPanel/AdminAllProducts'
 
 
 
@@ -38,6 +39,7 @@ const App = () => {
         <Route path='/AdminSignupPanel' element={<AdminSignupPanel />} />
         <Route path='/AdminProfile' element={<AdminProfile />} />
         <Route path='/CreateProduct' element={<CreateProduct />} />
+        <Route path='/AdminAllProducts' element={<AdminAllProducts />} />
       </Routes>
     </div>
   )

@@ -1,9 +1,10 @@
 import axios from 'axios'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 const Signin = () => {
+  const navigate = useNavigate()
 
 const SubmitHandler=async(e)=>{
 e.preventDefault()
@@ -12,8 +13,12 @@ let isEMail=formData.get("Email").endsWith("@gmail.com")
 
 if(formData && isEMail){
     try{
-    await axios.post("http://localhost:3000/user/signin",{Email:formData.get("Email"),Password:formData.get("Password")},{withCredentials:true})
-}
+      const response = await axios.post("http://localhost:3000/user/signin",{Email:formData.get("Email"),Password:formData.get("Password")},{withCredentials:true})
+      if(response.status === 200){
+        console.log("signin route success")
+        navigate("/")
+      }
+    }
 catch(err){
     console.log("signin Error ",err)
 }

@@ -10,7 +10,6 @@ const ProfileData = (props) => {
 const dataSelect=useSelector(state=>state.Admin.Admin)
 
 useEffect(()=>{
-console.log("data select is ",dataSelect[0].firstName)
 console.log("data select is ",dataSelect[0])
 },[])
 

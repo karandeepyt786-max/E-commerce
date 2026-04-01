@@ -46,11 +46,11 @@ let resposeuserdata=data.data.data
             FASCO
         </div>
         <ul className='flex gap-10 text-[calc(var(--LogoSize)-16px)] items-center '>
-            <Link to={"/"}  className='border-b border-transparent hover:border-black cursor-pointer'>Home</Link>
+            <Link to={"/AdminProfile"}  className='border-b border-transparent hover:border-black cursor-pointer'>Home</Link>
             <li  className='border-b border-transparent hover:border-black cursor-pointer'>Deals</li>
             <li  className='border-b border-transparent hover:border-black cursor-pointer'>New Arrivals</li>
             <Link to={"/CreateProduct"} className='border-b border-transparent hover:border-black cursor-pointer'>Create Products</Link>
-            <Link to={"/Shop"} className='border-b border-transparent hover:border-black cursor-pointer'>Shop</Link>
+            <Link to={"/AdminAllProducts"} className='border-b border-transparent hover:border-black cursor-pointer'>Shop</Link>
   {login!==200 && <Link to={"/Signin"}  className='border-b border-transparent hover:border-black cursor-pointer'> Sign in </Link>} 
            {login!==200 && <Link to={"/Signup"} className='border-1 px-6 py-2 rounded-[8px] bg-[#000000] text-[#FFFFFF]'>Sign up</Link>} 
            {login==200 &&  <Link className='w-10 h-10     flex items-center justify-center  rounded-full  text-black relative ProfileMain  ' onClick={()=>{setShowProfile(!ShowProfile)}}><CgProfile  size={30}/>
@@ -58,10 +58,12 @@ let resposeuserdata=data.data.data
         </ul>
       </div>
       <Main1/>
-      <Main4/>
+      <Main4 ImageUrl={"http://localhost:3000/Products/1774844789876-gro.jpg"}/>
       <Main8/>
  </div>
   )
 }
 
 export default AdminProfile
+{/* <img src="http://localhost:3000/Products/1774844789876-gro.jpg" alt="" srcset="" /> */}
+

@@ -1,35 +1,55 @@
-import React from 'react'
+  import React from 'react'
 
-const Right = () => {
+
+const Right = (props) => {
+
+  let precentage = (percent, price) => {
+    return (percent / 100) * price
+  }
+
   return (
     <div  className='w-[55%] h-[100%] flex flex-col '>
-      <div className="Brand text-[12px] font-bold text-[#666666]">Fasco</div>
+      <div className="Brand text-[12px] font-bold text-[#666666]">{props.ProductBrand}</div>
 
       <div className="Name flex justify-between">
-        <div className="ItemName text-[20px] font-bold volkhov">Denim Jacket</div>
+        <div className="ItemName text-[20px] font-bold volkhov">{props.ProductName}</div>
         <div className="Favourite border-1 border-gray-200 w-6 h-6 flex items-center justify-center rounded-full"><img src="../Routes/Products/image3.png" className='w-3 h-3 ' alt="" srcset="" /></div>
         </div>
 
         <div className="Rating flex items-center gap-1 mb-2">
           <div className="RatingItme flex">
-            <img src="../Routes/Products/image4.png" className='w-3 h-3 ' alt="" srcset="" />
-            <img src="../Routes/Products/image4.png" className='w-3 h-3 ' alt="" srcset="" />
-            <img src="../Routes/Products/image4.png" className='w-3 h-3 ' alt="" srcset="" />
-            <img src="../Routes/Products/image4.png" className='w-3 h-3 ' alt="" srcset="" />
-            <img src="../Routes/Products/image3.png" className='w-3 h-3 ' alt="" srcset="" />
+      
+            {
+              Array.from({length:props.ProductRating}).map((ite)=>(
+                
+                <img src="../Routes/Products/image4.png" className='w-3 h-3 ' alt="" srcset="" />
+
+              ))
+            }
+
+            {
+              Array.from({length:5-props.ProductRating}).map((ite)=>(
+                
+                <img src="../Routes/Products/image3.png" className='w-3 h-3 ' alt="" srcset="" />
+
+              ))
+            }
             </div>
-          <div className="Numbering text-[12px]">(3)</div>
+          <div className="Numbering text-[12px]">({props.ProductRating})</div>
         </div>
 
-        <div className="Price flex items-baseline gap-1 mb-3">
-          <div className="RealPrice text-[17px] font-bold volkhov">$39.00</div>
-          <div className="CutoffPrice text-[13px] font-[600] text-gray-400">$59.00</div>
-          <div className="SavePrice text-[8px] bg-[#DA3F3F] text-white px-3 py-1 rounded-2xl">Save 33%</div>
+        <div className="Price flex items-baseline gap-1 mb-3 ">
+          <div className="RealPrice text-[17px] font-bold volkhov">${props.ProductPrice - precentage(props.ProductSale,props.ProductPrice)}</div>
+         {props.ProductSale>0 && 
+         <div className='flex gap-2'>
+          <strike className="CutoffPrice text-[13px] font-[600] text-gray-400">${props.ProductPrice}</strike> 
+          <div className="SavePrice text-[8px] bg-[#DA3F3F] text-white px-3 py-1 rounded-2xl">Save {props.ProductSale}%</div>
+          </div>} 
         </div>
 
         <div className="Viewing flex items-baseline  gap-1 mb-4">
           <div className="Viewingicon "><img src="../Routes/Products/image6.png " className='w-3 h-3 ' alt="" srcset="" /></div>
-          <div className="ViewingNumber text-[#8A8A8A]  text-[13px]">24 people are viewing this right now</div>
+          <div className="ViewingNumber text-[#8A8A8A]  text-[13px]">{props.ProductReviews} people are viewing this right now</div>
         </div>
 
         <div className="SalesTimer mb-3 flex border-1  border-[#F8CCCC] rounded p-2 justify-between bg-[#F8CCCC] text-[#FF706B] font-bold">
@@ -46,7 +66,7 @@ const Right = () => {
         </div>
 
         <div className="LeftItemsFromStock flex flex-col gap-2 mb-4 ">
-          <div className="LeftStockText text-[#8A8A8A]  text-[13px] flex gap-1">Only <div className="number font-bold">9</div> item(s) left in stock!</div>
+          <div className="LeftStockText text-[#8A8A8A]  text-[13px] flex gap-1">Only <div className="number font-bold">{props.ProductStock}</div> item(s) left in stock!</div>
           <div className="LeftStockRange">
             <div className="FullLine w-[100%] h-1 rounded bg-[#DEDEDE]">
               <div className="RangeLine  w-[5%] h-1 rounded bg-[#EF2D2D]"></div>
@@ -57,36 +77,31 @@ const Right = () => {
         <div className="Size flex flex-col gap-2 mb-3">
           <div className="SizeText font-bold  text-[13px]">Size: M</div>
           <div className="SizeBoxes flex gap-2">
-            <div className="box text-[13px] cursor-pointer font-bold border-1 w-7 h-7 flex items-center justify-center rounded border-gray-200 hover:bg-black   hover:text-white ">
-              M
+            {
+              props.SizeAvailable.map((ite)=>(
+ <div className="box text-[13px] cursor-pointer font-bold border-1 w-7 h-7 flex items-center justify-center rounded border-gray-200 hover:bg-black   hover:text-white ">
+              {ite}
             </div>
-            <div className="box text-[13px] cursor-pointer font-bold border-1 w-7 h-7 flex items-center justify-center rounded border-gray-200 hover:bg-black   hover:text-white">
-                L
-            </div>
-            <div className="box text-[13px] cursor-pointer font-bold border-1 w-7 h-7 flex items-center justify-center rounded border-gray-200 hover:bg-black   hover:text-white ">
-              XL
-            </div>
-            <div className="box text-[13px] cursor-pointer font-bold border-1 w-7 h-7 flex items-center justify-center rounded border-gray-200 hover:bg-black   hover:text-white ">
-              XXL
-            </div>
+              ))
+            }
+           
+       
           </div>
         </div>
 
         <div className="Color mb-1">
           <div className="ColorText font-bold  text-[13px]">Color: Blue</div>
           <div className="ColorBoxes flex gap-2">
-
-            <div className="ColorParent w-8 h-8 hover:border-1 cursor-pointer rounded-full flex items-center justify-center">
-              <div className="ColorChild w-6 h-6 bg-blue-300 rounded-full"></div>
+{
+  props.ColorAvailable.map((ite)=>(
+  <div className="ColorParent w-8 h-8 hover:border-1 cursor-pointer rounded-full flex items-center justify-center">
+              <div className={`ColorChild w-6 h-6 bg-${ite}-500 rounded-full`}></div>
             </div>
-
-            <div className="ColorParent w-8 h-8 hover:border-1 cursor-pointer rounded-full flex items-center justify-center">
-              <div className="ColorChild w-6 h-6 bg-black rounded-full"></div>
-            </div>
-
-            <div className="ColorParent w-8 h-8 hover:border-1 cursor-pointer rounded-full flex items-center justify-center">
-              <div className="ColorChild w-6 h-6 bg-pink-200 rounded-full"></div>
-            </div>
+            
+  ))
+  
+}
+          
 
           </div>
         </div>

@@ -7,9 +7,13 @@ import Main6 from '../../AllMains/Main6/Main6'
 import Main7 from '../../AllMains/Main7/Main7'
 import Main8 from '../../AllMains/Main8/Main8'
 
-
+import axios from "axios"
+import { useEffect } from 'react'
+import { useState } from 'react'
 
 const Shop = () => {
+
+
   return (
     <div className='flex    flex-col '>
     <ShopMain1/>
