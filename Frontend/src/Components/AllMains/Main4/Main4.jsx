@@ -16,8 +16,9 @@ const Main4 = () => {
 
     const GetAllProducts = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/Admin/GetAllProducts");
+            const res = await axios.get("http://localhost:3000/Admin/GetAllProducts/0/latest");
             setproducts(res.data);
+            console.log("all products are ",res)
         } catch (err) {
             console.log("GetAllProducts error ", err);
         }
@@ -58,7 +59,7 @@ const Main4 = () => {
           {
             products.map((ite)=>(
 
-                <Main4Products ProductRating={ite.ProductRating} ProductPrice={ite.ProductPrice} ProductSale={ite.ProductSale} ProductStock={ite.ProductStock} ProductReviews={ite.ProductReviews} ProductBrand={ite.ProductBrand} ProductImage={ite.ProductImage} ProductName={ite.ProductName}/>
+                <Main4Products  ProductRating={ite.ProductRating} ProductPrice={ite.ProductPrice} ProductSale={ite.ProductSale} ProductStock={ite.ProductStock} ProductReviews={ite.ProductReviews} ProductBrand={ite.ProductBrand} ProductImage={ite.ProductImage} ProductName={ite.ProductName}/>
             ))
         }
 

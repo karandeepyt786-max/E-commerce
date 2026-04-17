@@ -1,5 +1,7 @@
 import React from 'react'
 
+
+
 //react functions
 import { Link, useNavigate } from 'react-router-dom'
 import axios from "axios"
@@ -8,6 +10,7 @@ import { Userstatus } from '../../../Redux/User'
 import { useDispatch, useSelector } from 'react-redux'
 
 const Signup = () => {
+
     const Dispatch = useDispatch()
 
     const SelectorData = useSelector(state => state.User.value)
@@ -22,6 +25,7 @@ const Signup = () => {
 
     const formHandler = async (e) => {
         e.preventDefault(); console.log("submit")
+      
 
         const formData = new FormData(e.target)
 

@@ -8,9 +8,6 @@ const Layout = () => {
     const location = useLocation();
     return (
         <div>
-                  {/* <Route path='/ForgetPassword' element={<ForgetPassword/>}/>
-          <Route path='/Confimation' element={<Confimation/>}/>
-          <Route path='/NewPassword' element={<NewPassword/>}/> */}
 
            { location.pathname === "/Signin" ||
             location.pathname ==="/Signup"||
@@ -18,11 +15,10 @@ const Layout = () => {
             location.pathname ==="/Confimation"||
             location.pathname ==="/NewPassword" ||
             location.pathname ==="/Thumbnail" ||
-            location.pathname ==="/AdminProfile" 
-            
+            location.pathname ==="/AdminProfile" ||
+            location.pathname ==="/not-found" 
             ?"":location.pathname === "/"  ? <Nav /> : <Nav2 />
             }
-          
            
         </div>
     )

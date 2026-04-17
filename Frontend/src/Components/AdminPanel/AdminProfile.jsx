@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { CgProfile } from "react-icons/cg";
 import axios from "axios"
 
+
 const AdminProfile = () => {
 
   const dispatch=useDispatch()
@@ -28,7 +29,8 @@ let resposeuserdata=data.data.data
   }
   useEffect(()=>{
     isLogInOutAdmin()
-  })
+
+  },[])
 
 
 

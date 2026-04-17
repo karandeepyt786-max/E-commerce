@@ -19,7 +19,7 @@ const AdminSignupSchema = new mongoose.Schema({
       ProductRating: { type: Number, default: 0 },
       ProductReviews: { type: Number, default: 0 },
       ProductStock: { type: Number, default: 0 },
-
+ProductQuantity:{type:Number,default:1},
       SizeAvailable: [String],   // ✅ fixed
       ColorAvailable: [String],  // ✅ fixed
       Tags: [String],             // ✅ fixed

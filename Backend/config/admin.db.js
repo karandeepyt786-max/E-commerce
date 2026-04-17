@@ -2,7 +2,7 @@ import mongoose, { connect } from "mongoose";
 
 const AdminConnection=async()=>{
     try{
-   await mongoose.connect(process.env.ADMIN_DB_CONNECTION)
+   await mongoose.connect(process.env.CONNECTION_URL)
     console.log("Admin Connection Success")
 }
 catch(err){

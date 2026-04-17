@@ -23,8 +23,10 @@ let dirPath = path.join(process.cwd(), "Public/Images/uploads/");
 //DB Connection
 import Connection from "./config/user.db.js";
 import AdminConnection from "./config/admin.db.js";
+import ProductsSchema from "./model/product.model.js";
 Connection();
 AdminConnection();
+ProductsSchema()
 
 //Cloud Services
 
@@ -47,6 +49,7 @@ app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
 app.use(
   "/Products",
   express.static(path.join(process.cwd(), "Public/Images/uploads/")),
@@ -56,6 +59,7 @@ app.use("/user", UserRoute);
 app.use("/Admin", AdminRoute);
 app.use("/", (req, res) => {
   res.send("hlo");
+  console.log("port is ",process.env.SERVER_PORT)
 });
 
 app.listen(process.env.SERVER_PORT);

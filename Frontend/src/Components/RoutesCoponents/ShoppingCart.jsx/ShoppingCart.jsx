@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Cart from './Cart'
 import Main8 from '../../AllMains/Main8/Main8'
 
 
+
 const ShoppingCart = () => {
+
+
     return (
         <div className="w-[100vw]  flex flex-col items-center">
 

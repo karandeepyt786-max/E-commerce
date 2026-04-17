@@ -4,7 +4,9 @@ const UserSlice=createSlice({
     name:"user",
     initialState:{
         value:100,
-        User:[]
+        User:[],
+        UserCartData:[],
+        Order:[]
     },
     reducers:{
         Userstatus:(state,data)=>{
@@ -14,11 +16,20 @@ const UserSlice=createSlice({
         UserData:(state,action)=>{
 state.User.push(action.payload.Details)
 // state.User.length>1?state.User=[]:""
+// console.log("User Data is ",state.User)
+        },
+        UserCart:(state,action)=>{
+            state.UserCartData=[action.payload.UserCartdata]
+        },
+        UserOrder:(state,action)=>{
+            state.Order=[]
+            state.Order=[action.payload.data]
+            console.log("action in userorder redux ",action.payload.data," and order is ",state.Order)
 
         }
     }
 })
 
 
-export const {Userstatus,UserData}=UserSlice.actions
+export const {Userstatus,UserData,UserCart,UserOrder}=UserSlice.actions
 export default UserSlice.reducer

@@ -1,20 +1,23 @@
-import mongoose  from "mongoose";
+import mongoose from "mongoose";
 
-const Product=new mongoose.Schema({
-    ProductCreatorEmail:String,
-    ProductBrand:String,
-ProductName:String,
-ProductPrice:Number,
-ProdutCateory:String,
-ProductSale:Number,
-ProductRating:Number,
-ProductReviews:Number,
-ProductStock:Number,
-SizeAvailable:[],
-ColorAvailable:[],
-Tags:[]
-})
+const ProductSchem = new mongoose.Schema({
+  ProductCreatorEmail: String,
+  ProductBrand: String,
+  ProductName: String,
+  ProductImage: String,
+  ProductPrice: Number,
+  ProductCategory: String, // ✅ fixed typo
+  ProductSale: { type: Number, default: 0 },
+  ProductRating: { type: Number, default: 0 },
+  ProductReviews: { type: Number, default: 0 },
+  ProductStock: { type: Number, default: 0 },
+  ProductQuantity: { type: Number, default: 1 },
+  SizeAvailable: [String], // ✅ fixed
+  ColorAvailable: [String], // ✅ fixed
+  Tags: [String], // ✅ fixed
+  DiscountCode: Number,
+});
 
-const AdminSignUp = mongoose.model("AdminSignup",AdminSignupSchema)
+const ProductsSchema = mongoose.model("Products", ProductSchem);
 
-export default AdminSignUp
+export default ProductsSchema;

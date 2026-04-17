@@ -24,7 +24,9 @@ AdminRouter.post("/Signin",AdminController.signinAdmin)
 AdminRouter.post("/isLoginOut",AdminController.loginoutAdmin)
 AdminRouter.post("/Logout",AdminController.Logout)
 AdminRouter.post("/CreateProduct",upload.single("ProductImage"),AdminController.CreateProduct)
-AdminRouter.get("/GetAllProducts",AdminController.GetAllProducts)
+AdminRouter.get("/GetAllProducts/:id/:sort",AdminController.GetAllProducts)
 AdminRouter.post("/GetOneProduct",AdminController.GetOneProduct)
+AdminRouter.post("/AddSales",AdminController.AddSales)
+AdminRouter.post("/SortingProduct",AdminController.SortingProduct)
 
 export default AdminRouter

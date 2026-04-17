@@ -11,9 +11,9 @@ const Nav = () => {
 
   const login=useSelector(state=>state.User.value)
 
-  useEffect(()=>{
-    console.log("component rendered profile data in nav")
-  },[login])
+  // useEffect(()=>{
+  //   console.log("component rendered profile data in nav")
+  // },[login])
   return (
     <div id='Nav' className='flex items-center justify-center  h-[100px] '>
       <div id="NavContent" className='flex w-[65%]  justify-between items-center '>

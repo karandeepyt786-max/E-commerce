@@ -16,6 +16,13 @@ import AdminSignupPanel from './Components/AdminPanel/AdminSignupPanel'
 import AdminProfile from './Components/AdminPanel/AdminProfile'
 import CreateProduct from './Components/AdminPanel/CreateProduct'
 import AdminAllProducts from './Components/AdminPanel/AdminAllProducts'
+import UserCart from './Components/AccountForms/UserCart'
+import UserOrder from './Components/AccountForms/UserOrder'
+import Error from './Components/Error'
+
+
+import {Navigate} from "react-router-dom"
+import Order from './Components/RoutesCoponents/Order/Order'
 
 
 
@@ -28,18 +35,33 @@ const App = () => {
         <Route path='/Shop' element={<Shop />} />
         <Route path='/Products' element={<Products />} />
         <Route path='/Cart' element={<ShoppingCart />} />
-        <Route path='/Checkout' element={<Checkout />} />
-        <Route path='/Signin' element={<Signin />} />
-        <Route path='/Signup' element={<Signup />} />
         <Route path='/ForgetPassword' element={<ForgetPassword />} />
         <Route path='/Confimation' element={<Confimation />} />
         <Route path='/NewPassword' element={<NewPassword />} />
         <Route path='/Thumbnail' element={<Thumbnail />} />
+        <Route path='/Checkout' element={<Checkout />} />
+        <Route path='/Signup' element={<Signup />} />
+        <Route path='/Signin' element={<Signin />} />
+
+        <Route path='/UserOrder' element={<UserOrder />} />
+        <Route path='/UserCart' element={<UserCart />} />
+
+
+
         <Route path='/AdminSigninPanel' element={<AdminSigninPanel/>} />
         <Route path='/AdminSignupPanel' element={<AdminSignupPanel />} />
         <Route path='/AdminProfile' element={<AdminProfile />} />
         <Route path='/CreateProduct' element={<CreateProduct />} />
         <Route path='/AdminAllProducts' element={<AdminAllProducts />} />
+
+        <Route path='/Order' element={<Order />} />
+
+
+
+        <Route path="*" element={<Navigate to="/not-found" />} />
+        <Route path="/not-found" element={<Error />}/>
+
+
       </Routes>
     </div>
   )

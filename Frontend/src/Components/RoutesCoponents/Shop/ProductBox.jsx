@@ -36,9 +36,9 @@ const OneProductGet = async (e) => {
             <div className={`${props.Productname} topLayer  absolute w-[100%]  h-[95%] `} ></div>
 
             <div className="image w-[100%] h-[80%] flex items-center justify-center " style={{backgroundImage:`url(http://localhost:3000/Products/${props.ImageUrl})`,backgroundSize:"cover",backgroundPosition:"center"}}  >
-            <div className="SolOutBox w-15 h-15 bg-gray-400 rounded-full flex items-center justify-center flex-col text-white font-extrabold leading-4">
+            {props.ProductStock ==0 && <div className="SolOutBox w-15 h-15 bg-gray-400 rounded-full flex items-center justify-center flex-col text-white font-extrabold leading-4">
 <span>Sold</span> <span>Out</span>
-            </div>
+            </div>}
              </div>
             <div className="DetailBox flex flex-col gap-1 pt-2">
                 <div className="Heading text-[13px] font-bold">{props.Productname}</div>

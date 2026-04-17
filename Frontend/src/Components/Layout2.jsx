@@ -6,17 +6,20 @@ const Layout = () => {
     const location = useLocation();
     return (
         <div>
+            {
 
-           { location.pathname === "/Signin" ||
-            location.pathname ==="/Signup" ||
-            location.pathname ==="/ForgetPassword"||
-            location.pathname ==="/Confimation"||
-            location.pathname ==="/NewPassword" ||
-            location.pathname ==="/Thumbnail" 
+                (
+                    location.pathname == "/Signin" ||
+                    location.pathname == "/Signup" ||
+                    location.pathname =="/ForgetPassword" ||
+                    location.pathname == "/Confimation" ||
+                    location.pathname == "/NewPassword" ||
+                    location.pathname == "/Thumbnail" ||
+                    location.pathname == "/not-found"
+                )
+                    ? "" : <Footer />}
 
-             ?"":location.pathname === "/"  ? < Footer/> : <Footer />}
-          
-           
+
         </div>
     )
 }
