@@ -63,3 +63,7 @@ app.use("/", (req, res) => {
 });
 
 app.listen(process.env.SERVER_PORT);
+
+
+// CONNECTION_URL=mongodb://localhost:27017/   
+// SERVER_PORT=3000
