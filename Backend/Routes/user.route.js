@@ -13,5 +13,6 @@ userRouter.post("/CartGetter",userController.CartGetter)
 userRouter.delete("/CartDelete",userController.CartDelete)
 userRouter.post("/Order",userController.Order)
 userRouter.post("/OrderGetter",userController.OrderGetter)
+userRouter.post("/OrderDelete",userController.OrderDelete)
 
 export default userRouter   

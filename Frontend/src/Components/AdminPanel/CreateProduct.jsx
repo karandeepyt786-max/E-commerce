@@ -44,7 +44,7 @@ const CreateProduct = () => {
 
         if (CreatorAdmin) {
             try {
-                await axios.post("http://localhost:3000/Admin/CreateProduct", { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductCategory: ProductCategory, ProductStock: ProductStock }, {
+                await axios.post("http://localhost:3000/Admin/CreateProduct", { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductStock: ProductStock }, {
                     withCredentials: true, headers: {
                         "Content-Type": "multipart/form-data"
                     }
@@ -55,7 +55,7 @@ const CreateProduct = () => {
                         })
                 })
 console.log(
-    { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductCategory: ProductCategory, ProductStock: ProductStock }
+    { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductStock: ProductStock }
 
 )
 
@@ -117,11 +117,11 @@ console.log(
 
 
                     <div>
-                        <input type="number" name='ProductStock' placeholder='product stock' onChange={(e) => { setProductStock(e.target.value) }} />
+                        <input type="numbe  r" name='ProductStock' placeholder='product stock' onChange={(e) => { setProductStock(e.target.value) }} />
                     </div>
 
                     <div>
-                        <input type="text" value={Tags} placeholder='product tags' onChange={(e) => { setTags(e.target.value) }} />
+                        <input type="text" value={Tags} placeholder='product tags' onChange={(e) => {e.preventDefault();     setTags(e.target.value) }} />
                         <button onClick={(e) => { setProductTags(prev => [...prev, Tags]) ;setTags("") }}>Add Tag</button>
                     </div>
 

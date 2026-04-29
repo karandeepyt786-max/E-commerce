@@ -33,62 +33,69 @@ const[Sales,setSales]=useState(0)
 
   return (
 
-    <div   className='w-70 h-90 rounded-2xl  flex flex-col items-center p-3 bg-white gap-3 relative '>
-
-
-      
-      <div  className="ImageBox w-63 h-45 overflow-hidden rounded-2xl bg-green-300">
-        <img src={props.ImageUrl || `http://localhost:3000/Products/${props.ProductImage}`} className='w-[100%] h-[100%]' alt="" srcset="" />
+    <div className='w-full max-w-[320px] rounded-2xl flex flex-col items-center p-4 bg-white shadow-sm hover:shadow-md transition-shadow gap-4 relative border border-gray-100'>
+      <div className="w-full aspect-[4/3] overflow-hidden rounded-xl bg-gray-100">
+        <img src={props.ImageUrl || `http://localhost:3000/Products/${props.ProductImage}`} className='w-full h-full object-cover' alt={props.ProductName} />
       </div>
-      <div className="ContentBox flex w-[100%]  flex-col gap-3 mt-2 px-2">
-        <div className="ContentBoxLine1 ">
-          <div className="ContentBoxLine1Content1 flex items-center justify-between    ">
-            <div className="ContentBoxLine1ContentHeading text-[#484848] font-bold ">{props.ProductName}</div>
-            <div className="ContentBoxLine1ContentStart flex">
-              {Array.from({ length: props.ProductRating }).map((_, i) => (
-                <img className='w-4 h-4' src="../Main4/Stars.png" alt="" srcset="" />
-              ))}
-
-            </div>
+      
+      <div className="w-full flex flex-col gap-2">
+        <div className="flex items-center justify-between gap-2">
+          <div className="text-[#484848] font-bold text-base truncate">{props.ProductName}</div>
+          <div className="flex shrink-0">
+            {Array.from({ length: props.ProductRating || 5 }).map((_, i) => (
+              <img key={i} className='w-3 h-3' src="../Main4/Stars.png" alt="Star" />
+            ))}
           </div>
-          {
-            props.ProductBrand ? <div className="ContentBoxLine1Content2 text-[10px] text-[#8A8A8A]">{props.ProductBrand} </div> : <div className="ContentBoxLine1Content2 text-[10px] text-[#8A8A8A]">AI Karam </div>
-          }
         </div>
-        {props.ProductReviews ? <div className="ContentBoxLine2 text-[10px] font-medium text-[#484848]">{props.reviews} Customer Reviews</div> : <div className="ContentBoxLine2 text-[10px] font-medium text-[#484848]">31 Customer Reviews</div>}
-        <div className="ContentBoxLine3   flex items-center justify-between">
 
-          {/* {props.Offer ? <div className="flex items-end gap-2">
-            <div className="ContentBoxLine3LeftContent text-[#484848] font-bold text-[20px] ">$50   </div>
-            <strike className="ContentBoxLine3LeftContent text-gray-400 font-bold text-[19px] ">{props.Price}</strike>
-          </div> : <div className="ContentBoxLine3LeftContent text-[#484848] font-bold text-2xl">{props.Price}</div>
-          } */}
+        <div className="text-[12px] text-[#8A8A8A]">
+          {props.ProductBrand || "AI Karam"}
+        </div>
 
-          {props.ProductSale ?
-            <div className="flex items-center gap-2 self-start ">
-              <div className="ContentBoxLine3LeftContent text-[#484848] font-bold text-[20px] ">${(props.ProductPrice - precentage(props.ProductSale, props.ProductPrice)).toFixed(2)}  </div>
-              <strike className="ContentBoxLine3LeftContent text-gray-400 font-bold text-[19px] ">${props.ProductPrice}</strike>
-            </div> : <div className="ContentBoxLine3LeftContent  text-[#484848] font-bold text-2xl">${props.ProductPrice}</div>
-          }
+        <div className="text-[12px] font-medium text-[#484848]">
+          {props.ProductReviews || "31"} Customer Reviews
+        </div>
 
+        <div className="flex items-center justify-between mt-1">
+          <div className="flex items-baseline gap-2">
+            {props.ProductSale ? (
+              <>
+                <span className="text-[#484848] font-bold text-xl">
+                  ${(props.ProductPrice - precentage(props.ProductSale, props.ProductPrice)).toFixed(2)}
+                </span>
+                <strike className="text-gray-400 text-sm">
+                  ${props.ProductPrice}
+                </strike>
+              </>
+            ) : (
+              <span className="text-[#484848] font-bold text-xl">${props.ProductPrice}</span>
+            )}
+          </div>
           
-         
-          {
-            props.ProductStock>10 ? 
-            <div className="ContentBoxLine3RightContent text-[10px] text-white bg-green-500 border-1 px-2 py-1 rounded-2xl ">Stock Available</div>
-            :props.ProductStock>0 && props.ProductStock<10?
-            <div className="ContentBoxLine3RightContent text-[10px] text-white bg-red-500 border-1 px-2 py-1 rounded-2xl ">Almost Sold Out</div> 
-            :<div className="ContentBoxLine3RightContent text-[10px] text-white bg-green-500 border-1 px-2 py-1 rounded-2xl ">No Stock Available</div>
-          }
-
-
-{location.pathname ==  "/AdminAllProducts" && 
-<div className='absolute right-2 top-[60%]  flex flex-col items-center gap-2 '>
-  <input type="Number" onChange={(e)=>{setSales(e.target.value)}}  placeholder='Enter the sale percentage' className='text-[10px] h-8' />
-  <IoIosAddCircle fill='rgb(34, 197, 94)' size={38} onClick={(e)=>{SaleSetter(e,props.productKey)}}  />
-    </div>}
-
+          {props.ProductStock > 10 ? (
+            <span className="text-[10px] text-white bg-green-500 px-2 py-1 rounded-full">Stock Available</span>
+          ) : props.ProductStock > 0 ? (
+            <span className="text-[10px] text-white bg-orange-500 px-2 py-1 rounded-full">Low Stock</span>
+          ) : (
+            <span className="text-[10px] text-white bg-red-500 px-2 py-1 rounded-full">Out of Stock</span>
+          )}
         </div>
+
+        {location.pathname === "/AdminAllProducts" && (
+          <div className='mt-4 flex items-center gap-2 border-t pt-4'>
+            <input 
+              type="number" 
+              onChange={(e) => setSales(e.target.value)} 
+              placeholder='Sale %' 
+              className='text-[12px] border rounded px-2 py-1 w-full' 
+            />
+            <IoIosAddCircle 
+              className="text-green-500 cursor-pointer shrink-0" 
+              size={32} 
+              onClick={(e) => SaleSetter(e, props.productKey)} 
+            />
+          </div>
+        )}
       </div>
     </div>
   )

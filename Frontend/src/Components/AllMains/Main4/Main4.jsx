@@ -40,32 +40,32 @@ const Main4 = () => {
 
 
 
-  return (
-    <div className='w-[65%]  flex flex-col items-center gap-3 pb-10'>
-        <div className="Main4Box1 flex flex-col gap-5">
-            <div className="Main4Box1Heading text-[30px] volkhov   text-[#484848] text-center">New Arrivals</div>
-            <div className="Main4Box1Data text-[14px] text-center px-55 text-[#8A8A8A]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin </div>
-            <div className="Main4Box1Btns flex justify-between  mt-3 ">
-                <div className="Main4Box1Btns1 text-[#8A8A8A] bg-[#FAFAFA] w-40 h-13 flex items-center justify-center rounded-2xl hover:bg-black hover:text-white cursor-pointer">Men's Fashion</div>
-                <div className="Main4Box1Btns1 text-[#8A8A8A] bg-[#FAFAFA] w-40 h-13 flex items-center justify-center rounded-2xl hover:bg-black hover:text-white cursor-pointer">Women's Fashion</div>
-                <div className="Main4Box1Btns1 text-[#8A8A8A] bg-[#FAFAFA] w-40 h-13 flex items-center justify-center rounded-2xl hover:bg-black hover:text-white cursor-pointer">Women Accessories</div>
-                <div className="Main4Box1Btns1 text-[#8A8A8A] bg-[#FAFAFA] w-40 h-13 flex items-center justify-center rounded-2xl hover:bg-black hover:text-white cursor-pointer">men Accessories</div>
-                <div className="Main4Box1Btns1 text-[#8A8A8A] bg-[#FAFAFA] w-40 h-13 flex items-center justify-center rounded-2xl hover:bg-black hover:text-white cursor-pointer">Discount Deals</div>
+    return (
+    <div className='w-[95%] lg:w-[80%] flex flex-col items-center gap-8 pb-20 mt-20'>
+        <div className="flex flex-col gap-5 items-center">
+            <div className="text-[28px] sm:text-[36px] lg:text-[48px] volkhov text-[#484848] text-center">New Arrivals</div>
+            <div className="text-[14px] sm:text-[16px] text-center max-w-[600px] text-[#8A8A8A]">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem.
+            </div>
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mt-6">
+                <div className="px-6 py-2 text-[#8A8A8A] bg-[#FAFAFA] rounded-full border border-transparent hover:border-black hover:text-black transition-all cursor-pointer text-sm font-medium">Men's Fashion</div>
+                <div className="px-6 py-2 text-[#8A8A8A] bg-[#FAFAFA] rounded-full border border-transparent hover:border-black hover:text-black transition-all cursor-pointer text-sm font-medium">Women's Fashion</div>
+                <div className="px-6 py-2 text-[#8A8A8A] bg-[#FAFAFA] rounded-full border border-transparent hover:border-black hover:text-black transition-all cursor-pointer text-sm font-medium">Women Accessories</div>
+                <div className="px-6 py-2 text-[#8A8A8A] bg-[#FAFAFA] rounded-full border border-transparent hover:border-black hover:text-black transition-all cursor-pointer text-sm font-medium">Men Accessories</div>
+                <div className="px-6 py-2 text-[#8A8A8A] bg-[#FAFAFA] rounded-full border border-transparent hover:border-black hover:text-black transition-all cursor-pointer text-sm font-medium">Discount Deals</div>
             </div>
         </div>
      
-        <div className="Main4Box2  h-275 overflow-hidden flex bg-[#F5F5F5] justify-around  mt-1 flex-wrap p-2 gap-1 rounded-2xl ">
-
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-10">
           {
-            products.map((ite)=>(
-
-                <Main4Products  ProductRating={ite.ProductRating} ProductPrice={ite.ProductPrice} ProductSale={ite.ProductSale} ProductStock={ite.ProductStock} ProductReviews={ite.ProductReviews} ProductBrand={ite.ProductBrand} ProductImage={ite.ProductImage} ProductName={ite.ProductName}/>
+            products.map((ite, index)=>(
+                <Main4Products key={index} {...ite} />
             ))
-        }
-
-
+          }
         </div>
-        <div className="btn bg-black text-white h-10 w-30 flex items-center justify-center rounded ">View More</div>
+        <button className="bg-black text-white px-10 py-3 rounded-md hover:bg-gray-800 transition-colors font-medium">
+          View More
+        </button>
     </div>
   )
 }

@@ -46,7 +46,7 @@ const ProfileData = (props) => {
         </div>
 
         <Link to={"/Order"} className='self-center w-[100%] flex items-center font-bold justify-center hover:bg-gray-300 h-8'>Order</Link>
-        <Link to={"/UserCart"} className='self-center w-[100%] flex items-center font-bold justify-center hover:bg-gray-300 h-8'>Cart</Link>
+        <Link to={"/Cart"} className='self-center w-[100%] flex items-center font-bold justify-center hover:bg-gray-300 h-8'>Cart</Link>
         <div onClick={() => { Logout() }} className='self-center w-[90%] px-2 h-8 rounded bg-red-500 hover:bg-red-400 text-white flex items-center font-bold justify-center'> Logout</div>
       </div>
     </div>

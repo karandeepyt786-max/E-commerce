@@ -19,6 +19,13 @@ const Right = (props) => {
   const [forsubtotal, setforsubtotal] = useState(1)
   const[Email,setEmail]=useState("")
 
+  const[Second,setSecond]=useState(60)
+  const[Minute,setMinute]=useState(60)
+  const[PrimeHour,setPrimeHour]=useState(60)
+  const[Hours,setHours]=useState(PrimeHour)
+const[HoursRound,setHoursRound]=useState(0)
+  const[Days,setDays]=useState(PrimeHour  )
+
 
   const ChildIncrement = () => {
     setforsubtotal(forsubtotal + 1)
@@ -103,18 +110,30 @@ const Right = (props) => {
     sendingData()
   }, [UserCartData])
 
-  console.log("alldata and usercart data is here ",props.AllData,UserCartData)
-  console.log("Product is from Right is ",props.Productid)
+useEffect(()=>{
+setInterval(() => {
+
+   setSecond((prev)=>(prev>0?prev-1:(setSecond(60),setMinute(prev=>prev>0?prev-1:(setMinute(60),(setHoursRound(prev=>prev+1)))))))
+
+}, 1000)
+},[])
+
+useEffect(()=>{
+setPrimeHour(prev=>prev-1)
+  setDays( Math.floor(PrimeHour/24))
+  setHours(prev=>prev>0?(PrimeHour-(Math.floor(PrimeHour/24)*24)):(prev=0))
+},[HoursRound])
+
+
 
 
   return (
-    <div className='w-[55%] h-[100%] flex flex-col '>
-
+    <div className='w-full lg:w-[50%] flex flex-col gap-6'>
       <Cart
         AllData={props.AllData}
         UserCartData={UserCartData}
-        ChildDecrement={() => { ChildDecrement() }}
-        ChildIncrement={() => { ChildIncrement() }}
+        ChildDecrement={ChildDecrement}
+        ChildIncrement={ChildIncrement}
         ProductBrand={props.ProductBrand}
         ProductName={props.ProductName}
         ProductPrice={props.ProductPrice}
@@ -128,169 +147,140 @@ const Right = (props) => {
         Color={Color}
         Productid={props.Productid}
         Email={Email}
-         />
+      />
 
-      <div className="Brand text-[12px] font-bold text-[#666666]">{props.ProductBrand}</div>
-
-      <div className="Name flex justify-between">
-        <div className="ItemName text-[20px] font-bold volkhov">{props.ProductName}</div>
-        <div className="Favourite border-1 border-gray-200 w-6 h-6 flex items-center justify-center rounded-full"><img src="../Routes/Products/image3.png" className='w-3 h-3 ' alt="" srcset="" /></div>
-      </div>
-
-      <div className="Rating flex items-center gap-1 mb-2">
-        <div className="RatingItme flex">
-
-          {
-            Array.from({ length: props.ProductRating }).map((ite) => (
-
-              <img src="../Routes/Products/image4.png" className='w-3 h-3 ' alt="" srcset="" />
-
-            ))
-          }
-
-          {
-            Array.from({ length: 5 - props.ProductRating }).map((ite) => (
-
-              <img src="../Routes/Products/image3.png" className='w-3 h-3 ' alt="" srcset="" />
-
-            ))
-          }
-        </div>
-        <div className="Numbering text-[12px]">({props.ProductRating})</div>
-      </div>
-
-      <div className="Price flex items-baseline gap-1 mb-3 ">
-        <div className="RealPrice text-[17px] font-bold volkhov">${props.ProductPrice - precentage(props.ProductSale, props.ProductPrice)}</div>
-        {props.ProductSale > 0 &&
-          <div className='flex gap-2'>
-            <strike className="CutoffPrice text-[13px] font-[600] text-gray-400">${props.ProductPrice}</strike>
-            <div className="SavePrice text-[8px] bg-[#DA3F3F] text-white px-3 py-1 rounded-2xl">Save {props.ProductSale}%</div>
-          </div>}
-      </div>
-
-      <div className="Viewing flex items-baseline  gap-1 mb-4">
-        <div className="Viewingicon "><img src="../Routes/Products/image6.png " className='w-3 h-3 ' alt="" srcset="" /></div>
-        <div className="ViewingNumber text-[#8A8A8A]  text-[13px]">{props.ProductReviews} people are viewing this right now</div>
-      </div>
-
-      <div className="SalesTimer mb-3 flex border-1  border-[#F8CCCC] rounded p-2 justify-between bg-[#F8CCCC] text-[#FF706B] font-bold">
-        <div className="SalesTimerText">Hurry up! Sale ends in:</div>
-        <div className="SalesToe flex gap-3">
-          <div className="Day">00</div>
-          <div className="colon">:</div>
-          <div className="Hours">05</div>
-          <div className="colon">:</div>
-          <div className="Minutes">59</div>
-          <div className="colon">:</div>
-          <div className="Seconds">47</div>
+      <div className="flex flex-col gap-2">
+        <div className="text-xs font-bold uppercase tracking-widest text-gray-400">{props.ProductBrand}</div>
+        <div className="flex justify-between items-start">
+          <h1 className="text-2xl sm:text-3xl font-bold volkhov text-[#484848] leading-tight">{props.ProductName}</h1>
+          <button className="p-2 border border-gray-200 rounded-full hover:bg-gray-50 transition-colors">
+            <img src="../Routes/Products/image3.png" className='w-4 h-4' alt="Wishlist" />
+          </button>
         </div>
       </div>
 
-      <div className="LeftItemsFromStock flex flex-col gap-2 mb-4 ">
-        <div className="LeftStockText text-[#8A8A8A]  text-[13px] flex gap-1">Only <div className="number font-bold">{props.ProductStock}</div> item(s) left in stock!</div>
-        <div className="LeftStockRange">
-          <div className="FullLine w-[100%] h-1 rounded bg-[#DEDEDE]">
-            <div className="RangeLine  w-[5%] h-1 rounded bg-[#EF2D2D]"></div>
+      <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <img 
+              key={i} 
+              src={i < props.ProductRating ? "../Routes/Products/image4.png" : "../Routes/Products/image3.png"} 
+              className='w-4 h-4' 
+              alt="Star" 
+            />
+          ))}
+        </div>
+        <span className="text-sm text-gray-500 font-medium">({props.ProductReviews} reviews)</span>
+      </div>
+
+      <div className="flex items-center gap-4">
+        <span className="text-3xl font-bold text-black">
+          ${(props.ProductPrice - precentage(props.ProductSale, props.ProductPrice)).toFixed(2)}
+        </span>
+        {props.ProductSale > 0 && (
+          <div className='flex items-center gap-2'>
+            <span className="text-lg text-gray-400 line-through">${props.ProductPrice}</span>
+            <span className="bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              Save {props.ProductSale}%
+            </span>
           </div>
+        )}
+      </div>
+
+      <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-100 rounded-2xl text-red-600">
+        <img src="../Routes/Products/image6.png" className='w-5 h-5' alt="Hot" />
+        <p className="text-sm font-medium">{props.ProductReviews} people are viewing this right now</p>
+      </div>
+
+      <div className="p-4 bg-amber-50 border border-amber-100 rounded-2xl flex flex-col sm:flex-row justify-between gap-4">
+        <span className="text-amber-800 font-bold text-sm">🔥 Hurry up! Sale ends in:</span>
+        <div className="flex gap-4 text-amber-900 font-mono font-bold text-sm">
+          <span>{Days}d</span><span>:</span><span>{Hours}h</span><span>:</span><span>{Minute}m</span><span>:</span><span>{Second}s</span>
         </div>
       </div>
 
-      <div className="Size flex flex-col gap-2 mb-3">
-        <div className="SizeText font-bold  text-[13px]">Size: {Size}</div>
-        <div className="SizeBoxes flex gap-2">
-          {
-            props.SizeAvailable.map((ite) => (
-              <div onClick={() => { setSize(ite) }} className={`box text-[13px] cursor-pointer font-bold border-1 w-7 h-7 flex items-center justify-center rounded border-gray-200 ${Size == ite && "text-white bg-black"} `}>
+      <div className="flex flex-col gap-3">
+        <div className="flex justify-between items-center text-sm">
+          <span className="text-gray-500 font-medium">Only <span className="text-black font-bold">{props.ProductStock}</span> items left!</span>
+        </div>
+        <div className="w-full h-1.5 bg-gray-100 rounded-full overflow-hidden">
+          <div className="h-full bg-red-500 rounded-full" style={{ width: '15%' }}></div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 py-4 border-y border-gray-100">
+        <div className="flex flex-col gap-3">
+          <span className="text-sm font-bold text-gray-700">Select Size: <span className="text-black">{Size}</span></span>
+          <div className="flex flex-wrap gap-2">
+            {props.SizeAvailable.map((ite) => (
+              <button 
+                key={ite}
+                onClick={() => setSize(ite)} 
+                className={`w-10 h-10 rounded-xl text-sm font-bold border transition-all ${Size === ite ? 'bg-black text-white border-black' : 'border-gray-200 hover:border-black'}`}
+              >
                 {ite}
-              </div>
-            ))
-          }
-
-
-        </div>
-      </div>
-
-      <div className="flex  justify-between">
-        <div className="Color mb-1">
-          <div className="ColorText font-bold  text-[13px]">Color: {Color}</div>
-          <div className="ColorBoxes flex gap-2">
-            {
-              props.ColorAvailable.map((ite) => (
-                <div onClick={() => { setColor(ite) }} className={`ColorParent w-8 h-8 hover:border-1  cursor-pointer rounded-full flex items-center justify-center `}>
-                  <div className={`ColorChild w-6 h-6 bg-${ite}-500 rounded-full`}></div>
-                </div>
-
-              ))
-
-            }
-
-
+              </button>
+            ))}
           </div>
         </div>
-        <div className="Subtotal">
-          <div className='font-bold'>Subtotal</div>
-          <div className="">${((props.ProductPrice - precentage(props.ProductSale, props.ProductPrice)) * forsubtotal).toFixed(2)}</div>
-        </div>
-      </div>
-
-      <div className="Qty flex flex-col gap-2">
-
-        <div className="QtyText font-bold  text-[13px]">Quantity</div>
-
-        <div className="QtyAdd flex justify-between ">
-          <div className="QtyAddRemove flex border-1  border-gray-300 w-30 justify-around rounded items-center   font-bold text-gray-500 ">
-            <div className="Remove text-[17px]" onClick={() => { setforsubtotal(prev => (prev > 1 ? prev - 1 : prev)); }}>-</div>
-            <div className="AddRemoveNumber text-[14px]">{forsubtotal}</div>
-            <div className="Add text-[17px]" onClick={() => { setforsubtotal(forsubtotal + 1) }}>+</div>
+        <div className="flex flex-col gap-3">
+          <span className="text-sm font-bold text-gray-700">Select Color: <span className="text-black capitalize">{Color}</span></span>
+          <div className="flex flex-wrap gap-3">
+            {props.ColorAvailable.map((ite) => (
+              <button 
+                key={ite}
+                onClick={() => setColor(ite)} 
+                className={`w-8 h-8 rounded-full border-2 transition-all ${Color === ite ? 'border-black' : 'border-transparent'}`}
+                style={{ backgroundColor: ite }}
+              />
+            ))}
           </div>
-          <div className="AddToCartButton border-2 rounded volkhov w-[70%] h-10 flex items-center justify-center  font-bold  text-[13px] " onClick={() => { AddtoCart() }}>Add to cart</div>
         </div>
       </div>
 
-      <div className="Help flex gap-10 mt-15 mb-2">
-
-        <div className="Box1 flex gap-2 items-center ">
-          <div className="icons"><img src="../Routes/Products/image7.png " className='w-4 h-4 ' alt="" srcset="" /></div>
-          <div className="text font-[700]  text-[13px]">Compare</div>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex items-center justify-between border border-gray-200 rounded-xl px-4 py-3 sm:w-32">
+            <button className="text-xl font-bold hover:text-black transition-colors" onClick={() => setforsubtotal(prev => (prev > 1 ? prev - 1 : prev))}>-</button>
+            <span className="font-bold">{forsubtotal}</span>
+            <button className="text-xl font-bold hover:text-black transition-colors" onClick={() => setforsubtotal(forsubtotal + 1)}>+</button>
+          </div>
+          <button 
+            onClick={AddtoCart} 
+            className="flex-grow bg-black text-white py-4 rounded-xl font-bold hover:bg-gray-800 transition-all shadow-xl shadow-black/10 active:scale-95"
+          >
+            Add to cart — ${((props.ProductPrice - precentage(props.ProductSale, props.ProductPrice)) * forsubtotal).toFixed(2)}
+          </button>
         </div>
-
-        <div className="Box1 flex gap-2  items-center">
-          <div className="icons"><img src="../Routes/Products/image8.png " className='w-4 h-4 ' alt="" srcset="" /></div>
-          <div className="text font-[700]  text-[13px]">Ask a question</div>
-        </div>
-
-        <div className="Box1 flex gap-2  items-center">
-          <div className="icons"><img src="../Routes/Products/image9.png " className='w-4 h-4 ' alt="" srcset="" /></div>
-          <div className="text font-[700]  text-[13px]">Share</div>
-        </div>
-
       </div>
 
-      <div className="horizontalLine border-1 border-gray-100"></div>
-
-      <div className="OrderTimingDetail mt-5">
-
-        <div className="Line flex gap-2">
-          <div className="icons"><img src="../Routes/Products/image10.png " className='w-4 h-[17px] ' alt="" srcset="" /></div>
-          <div className="Heading font-[700]  text-[13px]">Estimated Delivery:</div>
-          <div className="Data">Jul 30 - Aug 03</div>
-        </div>
-
-        <div className="Line flex gap-2">
-          <div className="icons"><img src="../Routes/Products/image11.png " className='w-4 h-[17px] ' alt="" srcset="" /></div>
-          <div className="Heading font-[700]  text-[13px]">Free Shipping & Returns:</div>
-          <div className="Data">On all orders over $75</div>
-        </div>
-
+      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+        {[
+          { img: "image7.png", label: "Compare" },
+          { img: "image8.png", label: "Ask Question" },
+          { img: "image9.png", label: "Share" }
+        ].map(item => (
+          <button key={item.label} className="flex items-center justify-center gap-2 text-xs font-bold text-gray-500 hover:text-black transition-colors">
+            <img src={`../Routes/Products/${item.img}`} className='w-4 h-4' alt={item.label} />
+            {item.label}
+          </button>
+        ))}
       </div>
 
-      <div className="Box w-[100%] bg-[#F8F8F8] h-25 flex flex-col items-center justify-evenly mt-4">
-        <div className="Brandsicons ">
-          <img src="../Routes/Products/image12.png " className='w-70 h-6 ' alt="" srcset="" />
+      <div className="flex flex-col gap-3 p-6 bg-gray-50 rounded-2xl border border-gray-100">
+        <div className="flex items-center gap-3 text-sm">
+          <img src="../Routes/Products/image10.png" className='w-5 h-5' alt="Delivery" />
+          <span className="text-gray-500 font-medium">Estimated Delivery: <span className="text-black font-bold">Jul 30 - Aug 03</span></span>
         </div>
-        <div className="FeedbackData font-[700]  text-[13px]">Guarantee safe & secure checkout</div>
+        <div className="flex items-center gap-3 text-sm">
+          <img src="../Routes/Products/image11.png" className='w-5 h-5' alt="Returns" />
+          <span className="text-gray-500 font-medium">Free Shipping & Returns: <span className="text-black font-bold">On all orders over $75</span></span>
+        </div>
+        <div className="mt-4 pt-4 border-t border-gray-200 flex flex-col items-center gap-3">
+          <img src="../Routes/Products/image12.png" className='h-6 opacity-60' alt="Payment Methods" />
+          <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Guarantee safe & secure checkout</span>
+        </div>
       </div>
-
     </div>
   )
 }

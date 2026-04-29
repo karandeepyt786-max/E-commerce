@@ -32,28 +32,26 @@ const OneProductGet = async (e) => {
 };
 
     return (
-        <div className="Container w-55 h-90 relative  cursor-pointer"  onClick={(e)=>{OneProductGet(e)}}>
-            <div className={`${props.Productname} topLayer  absolute w-[100%]  h-[95%] `} ></div>
-
-            <div className="image w-[100%] h-[80%] flex items-center justify-center " style={{backgroundImage:`url(http://localhost:3000/Products/${props.ImageUrl})`,backgroundSize:"cover",backgroundPosition:"center"}}  >
-            {props.ProductStock ==0 && <div className="SolOutBox w-15 h-15 bg-gray-400 rounded-full flex items-center justify-center flex-col text-white font-extrabold leading-4">
-<span>Sold</span> <span>Out</span>
-            </div>}
-             </div>
-            <div className="DetailBox flex flex-col gap-1 pt-2">
-                <div className="Heading text-[13px] font-bold">{props.Productname}</div>
-                <div className="Price text-[10px] ">${props.ProductPrice}{Single}</div>
-                <div className="Color flex gap-2 pt-1 ">
-
-                    <div className="pra hover:border-1 h-6 w-6 flex items-center justify-center rounded-full">
-                        <div className="color1 h-4 w-4  rounded-full bg-yellow-400">
+        <div className="group flex flex-col gap-3 cursor-pointer" onClick={(e)=>{OneProductGet(e)}}>
+            <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100">
+                <div className={`${props.Productname} absolute inset-0 z-10 transition-colors group-hover:bg-black/5`}></div>
+                <div className="w-full h-full flex items-center justify-center bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style={{backgroundImage:`url(http://localhost:3000/Products/${props.ImageUrl})`}}>
+                    {props.ProductStock === 0 && (
+                        <div className="z-20 w-16 h-16 bg-black/60 rounded-full flex flex-col items-center justify-center text-white text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm">
+                            <span>Sold</span>
+                            <span>Out</span>
                         </div>
-                        
-                    </div>
-                    <div className="pra hover:border-1 h-6 w-6 flex items-center justify-center rounded-full">
-                        <div className="color1 h-4 w-4  rounded-full bg-black">
-                        </div>
-
+                    )}
+                </div>
+            </div>
+            
+            <div className="flex flex-col gap-1 px-1">
+                <h3 className="text-sm font-bold text-[#484848] truncate">{props.Productname}</h3>
+                <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-500">${props.ProductPrice}</span>
+                    <div className="flex gap-1.5">
+                        <div className="w-4 h-4 rounded-full bg-yellow-400 border border-white shadow-sm"></div>
+                        <div className="w-4 h-4 rounded-full bg-black border border-white shadow-sm"></div>
                     </div>
                 </div>
             </div>

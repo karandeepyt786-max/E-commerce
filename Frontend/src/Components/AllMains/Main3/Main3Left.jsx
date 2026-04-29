@@ -2,30 +2,28 @@ import React from "react";
 
 const Main3Left = () => {
   return (
-    <div className="w-[40%] ">
-      <div className="MainLeftBox1 flex flex-col gap-2">
-        <div className="MainLeftBox1Heading text-[34px] volkhov pr-18 text-[#484848] ">
+    <div className="md:w-4/10 w-[95%] [@media(max-width:600px)]:w-[80vw]  relative    ">
+      <div className="flex flex-col gap-4 text-center md:text-left [@media(max-width:600px)]:items-center  items-center md:items-start">
+        <div className="text-[24px] sm:text-[28px] lg:text-[40px] volkhov text-[#484848]">
           Deals Of The Month
         </div>
-        <div className="MainLeftBox1Details text-[12px] pr-29 text-[#8A8A8A] ">
+        <div className="text-[13px] sm:text-[14px] lg:text-[16px] text-[#8A8A8A] [@media(max-width:600px)]:text-center max-w-[600px]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque
           duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices
-          sollicitudin{" "}
+          sollicitudin
         </div>
-        <div className="MainLeftBox1Button text-white text-[15px] px-5 py-2 rounded bg-black w-30 flex flex-col ml-4 items-center ">
+        <button className="bg-black text-white px-8 py-3 rounded text-[14px] font-medium hover:bg-gray-800 transition-colors">
           Buy Now
+        </button>
+        <div className="mt-6">
+          <img className="w-[200px] sm:w-[250px] object-contain" src="../Main3/image1.png" alt="Calendar" />
         </div>
-        <div className="MainLeftCalender mt-8">
-          <img className="w-[70%]" src="../Main3/image1.png" alt="" srcset="" />
+        <div className="flex gap-4 mt-4">
+          <img className='w-8 h-8 sm:w-10 sm:h-10 cursor-pointer' src="../Main3/image2iconLeft.png" alt="Arrow Left" />
+          <img className='w-8 h-8 sm:w-10 sm:h-10 cursor-pointer' src="../Main3/image2iconRight.png" alt="Arrow Right" />
         </div>
+      </div>
 
-      </div>
-      <div className="MainLeftBox2">
-        <div id="Icons" className='flex   relative left-65 top-2'>
-  <div className="iconLeft"><img className='w-[50px] absolute' src="../Main3/image2iconLeft.png" alt="" srcset="" /></div>
-  <div className="iconRight"><img className='w-[50px] absolute left-10 ' src="../Main3/image2iconRight.png" alt="" srcset="" /></div>
-</div>
-      </div>
     </div>
   );
 };

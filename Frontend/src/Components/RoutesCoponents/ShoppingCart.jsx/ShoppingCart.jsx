@@ -8,21 +8,20 @@ const ShoppingCart = () => {
 
 
     return (
-        <div className="w-[100vw]  flex flex-col items-center">
-
-            <div className='w-[75%]   flex flex-col gap-2'>
-                <div className="Heading volkhov text-[25px] text-center">Shopping Cart</div>
-                <div className="Links flex gap-2 self-center items-baseline">
-                    <div className="Heading volkhov text-[10px] text-center">Home</div>
-                    <img src='../Routes/Shop/image1.png' className='w-1 h-2  ' />
-                    <div className="Heading volkhov text-[10px] text-center ">Your Shopping Cart</div>
-                </div>
-            </div>
-
-<Cart/>
-
-<Main8/>
+    <div className="flex flex-col items-center w-full">
+        <div className='w-full py-10 flex flex-col items-center gap-2 bg-[#F9F9F9]'>
+          <h1 className="text-3xl md:text-4xl font-bold volkhov text-[#484848]">Shopping Cart</h1>
+          <div className="flex items-center gap-2 text-sm text-[#8A8A8A]">
+            <span className="cursor-pointer hover:text-black transition-colors">Home</span>
+            <span className="text-gray-300">/</span>
+            <span className="text-black font-medium">Your Shopping Cart</span>
+          </div>
         </div>
+
+        <Cart/>
+
+        <Main8/>
+    </div>
     )
 }
 

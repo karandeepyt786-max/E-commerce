@@ -2,13 +2,13 @@ import React from 'react'
 
 const ShopMain1 = () => {
   return (
-    <div className='w-[75%]  self-center flex flex-col gap-2'>
-  <div className="Heading volkhov text-[25px] text-center">Fashion</div>
-<div className="Links flex gap-2 self-center items-baseline">
-      <div className="Heading volkhov text-[10px] text-center">Home</div>
-      <img src='../Routes/Shop/image1.png'  className='w-1 h-2  '/>
-      <div className="Heading volkhov text-[10px] text-center ">Fashion</div>
-</div>
+    <div className='w-full py-10 flex flex-col items-center gap-2 bg-[#F9F9F9]'>
+      <h1 className="text-3xl md:text-4xl font-bold volkhov text-[#484848]">Fashion</h1>
+      <div className="flex items-center gap-2 text-sm text-[#8A8A8A]">
+        <span className="cursor-pointer hover:text-black transition-colors">Home</span>
+        <span className="text-gray-300">/</span>
+        <span className="text-black font-medium">Fashion</span>
+      </div>
     </div>
   )
 }

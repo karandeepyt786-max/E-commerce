@@ -2,7 +2,7 @@ import React from 'react'
 
 const Left = () => {
   return (
-   <div className="Left w-[25%] h-[100%]  " >
+    <div className="w-full bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
 <div className="Heading  volkhov text-[20px] h-7  ">
     Filters
 </div>

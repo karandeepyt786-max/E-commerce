@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import {Link} from "react-router-dom"
 import { useDispatch, useSelector } from 'react-redux'
-import { UserCart, UserData } from '../../../../Redux/User'
+import { UserCart, UserData, UserOrder } from '../../../../Redux/User'
 import axios from "axios"
 
 const Cart = (props) => {
@@ -72,11 +72,10 @@ sendingData()
     }
   }
 
-  console.log("Calling cart data is  ",props.UserCartData)
 
   return (
-    <div className={`layer fixed  w-[197vh] h-[100vh] bg-gray-500/40 top-0 left-0 ${!props.ishidden && "hidden"}`}>
-      <div className='w-[35%] h-[100%] absolute right-0 bg-white  px-6 flex flex-col justify-between'>
+    <div className={`layer fixed  w-[100%] h-[100vh] bg-gray-500/40 top-0 z-100 left-0 ${!props.ishidden && "hidden"}`}>
+      <div className='w-[500px] h-[100%] [@media(max-width:663px)]:w-[80%] absolute right-0 top-0 bg-white  px-6 flex flex-col justify-between'>
         <div className="Top mt-4">
 
           <div className="Box1 flex justify-between  ">
@@ -86,9 +85,12 @@ sendingData()
 
           <div className="Box2 text-gray-400">Buy <span className='font-bold text-black'>$122.35</span> more and get <span className='font-bold text-black'>free shipping</span></div>
 
-          <div className="Box3 flex mt-8 mb-10 ">
-            <div className="ImageBox"><img src={`http://localhost:3000/Products/${props.ProductImage}`} className='w-25 h-32' alt="" srcset="" /></div>
+          <div className="Box3 flex mt-8 mb-10 flex-wrap justify-center gap-6">
+
+            <div className="ImageBox"><img src={`http://localhost:3000/Products/${props.ProductImage}`} className='w-[200px] h-[150px]' alt="" srcset="" /></div>
+
             <div className="DetailsBox pl-3 flex flex-col gap-1">
+
               <div className="Name font-bold volkhov">Denim Jacket</div>
               <div className="Color text-gray-400">Color : {props.Color}</div>
               <div className="Price font-bold volkhov">${((props.ProductPrice * props.forsubtotal) - percentage(props.AllData.ProductSale, (props.forsubtotal * props.ProductPrice)))}</div>
@@ -119,9 +121,26 @@ sendingData()
             <div className="left">Subtotal</div>
             <div className="right">${((Checked ? ((props.ProductPrice * props.forsubtotal) + 10) : (props.ProductPrice * props.forsubtotal)) - percentage(props.AllData.ProductSale, (props.forsubtotal * props.ProductPrice)))}</div>
           </div>
-          <div className="checkoutButton mt-6 bg-black text-white w-[80%] h-10 flex items-center justify-center rounded mx-auto shadow-2xl">
+
+          <Link to={"/Checkout"}
+                          onClick={() => { dispatch(UserOrder({ data: { ProductBrand: props.ProductBrand,
+                ProductName: props.ProductName,
+                ProductPrice: (props.ProductPrice),
+                ProductCategory: props.ProductCategory,
+                ProductSale: props.ProductSale,
+                ProductRating: props.ProductRating,
+                ProductSize: props.Size,
+                ProductColor: props.Color,
+
+                ProductQuantity: props.forsubtotal,
+                ProductStock: props.ProductStock,
+                ProductReviews: props.ProductReviews,
+                ProductImage:props.ProductImage,
+                WrapChecked: Checked,} })) }} 
+          className="checkoutButton mt-6 bg-black text-white w-[80%] h-10 flex items-center justify-center rounded mx-auto shadow-2xl">
             Checkout
-          </div>
+          </Link>
+
           <Link to={"/Cart"} onClick={() => {
             console.log("from cart is ", props.UserCartData),
             dispatch(UserCart({
@@ -143,6 +162,7 @@ sendingData()
             })),
             addToCart()
           }} className="ViewCart font-bold volkhov text-center pt-4 pb-4 underline">View Cart</Link>
+
         </div>
       </div>
     </div>

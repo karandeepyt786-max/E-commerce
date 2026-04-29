@@ -4,12 +4,17 @@ import Main8 from '../../AllMains/Main8/Main8'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { setSingleProduct } from '../../../../Redux/Admin'
+import Order from '../Order/Order'
 
 const Checkout = () => {
     const DispatchOrder = useDispatch()
     const OrderData = useSelector(state => state.User.Order)
-    const productidis = OrderData[0].ProductDataById
-    console.log("OrderData from the checkout ", OrderData[0])
+
+const datas=OrderData[0]?.ProductDataById?OrderData[0].ProductDataById:OrderData[0]
+
+const productidis = OrderData[0]._id
+console.log("data is the ",datas,' image is ',datas.ProductImage," the product id is the ",productidis)
+console.log("oreder 0 is the ",OrderData[0].ProductDataById._id)
     const countries = [
         "United States",
         "India",
@@ -73,7 +78,7 @@ const Checkout = () => {
         DiscountCode: DiscountCode
     }
 
-    console.log(
+    console.log("the data of userrallinformation is ",
         Email,
         UnitedState,
         FirstName,
@@ -88,17 +93,19 @@ const Checkout = () => {
         Security,
         CardHolder,
         DiscountCode
-    )
+    ," also user all information is the ",UserAllInformation," also the datas is the ",datas)
+console.log("OrderData from the checkout ", (OrderData[0])," UserAllInformation is ",UserAllInformation)
 
+    console.log("hlo")
 
     const AddToOrder = async (e) => {
         e.preventDefault()
       
         try {
-            const data = await axios.post("http://localhost:3000/user/Order", { UserAllInformation: UserAllInformation,ProductData:OrderData[0] }, { withCredentials: true })
+            const data = await axios.post("http://localhost:3000/user/Order", { UserAllInformation: UserAllInformation,ProductData:datas,productidis:productidis }, { withCredentials: true })
             console.log("Add To Order ", data.data)
         }
-        catch (err) {
+        catch (err) {   
             console.log("error while adding order is ", err)
         }
     }
@@ -122,162 +129,125 @@ const Checkout = () => {
     })
 
     return (
-        <div className='w-[calc(98vw+12px)] flex flex-col'>
-            <div className="Heading volkhov text-[25px] text-center pb-6 w-[75%] self-center">FASCO Demo Checkout</div>
-            <div className="MainBox w-[100%] h-[16  0vh] flex border-t-1 border-t-gray-300">
-
-                <form onSubmit={(e) => {AddToOrder(e)}} className="MainBoxLeft  w-[50%] h-[100%] mr-7  flex justify-end">
-                    <div className="DataBox w-[60%] h-[100%] ">
-
-                        <div className="Contact">
-                            <div className="Line1 flex justify-between">
-                                <div className="Heading volkhov text-[25px] ">Contact</div>
-                                <div className="Others">
-                                    <span className='text-[10px] '>Have an account?</span> <span className='text-[10px] text-blue-400'>Create Account</span>
-                                </div>
+        <div className='w-full min-h-screen bg-white'>
+            <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl volkhov text-center mb-10">FASCO Demo Checkout</h1>
+                
+                <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
+                    {/* Left Section: Information Form */}
+                    <form onSubmit={AddToOrder} className="w-full lg:w-[60%] flex flex-col gap-10">
+                        <section className="flex flex-col gap-6">
+                            <div className="flex justify-between items-end border-b border-gray-100 pb-2">
+                                <h2 className="text-xl sm:text-2xl volkhov">Contact</h2>
+                                <p className="text-xs">
+                                    <span className='text-gray-400'>Have an account?</span> <span className='text-blue-500 font-bold cursor-pointer'>Login</span>
+                                </p>
                             </div>
-                            <div className="EmailBox mb-4 mt-4">
-                                <input required name="Email" onChange={(e) => { setEmail(e.target.value) }} type="text" placeholder='Email Address' className='border-1 focus:outline-0  border-gray-400  text-gray-600 font-[400] w-[100%] h-14 pl-5' />
-                            </div>
+                            <input required name="Email" onChange={(e) => setEmail(e.target.value)} type="email" placeholder='Email Address' className='w-full h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
+                        </section>
 
-                        </div>
-
-                        <div className="Delivery">
-                            <div className="Heading volkhov text-[25px] ">Delivery</div>
-                            <select required onChange={(e) => { setUnitedState(e.target.value) }} name="UnitedState" className='border-1 border-gray-400  text-gray-600 font-[400] w-[100%] h-14 pl-5 focus:outline-0  mt-4 mb-4' >
-                                {
-                                    countries.map((ite) => (
-
-                                        <option name="UnitedState" value={`${ite}`}>{ite}</option>
-                                    ))
-                                }
+                        <section className="flex flex-col gap-6">
+                            <h2 className="text-xl sm:text-2xl volkhov border-b border-gray-100 pb-2">Delivery</h2>
+                            <select required onChange={(e) => setUnitedState(e.target.value)} name="UnitedState" className='w-full h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' >
+                                {countries.map((ite) => (
+                                    <option key={ite} value={ite}>{ite}</option>
+                                ))}
                             </select>
-                            <div className="AdressBox mb-4 mt-4 flex justify-between">
-                                <input required onChange={(e) => { setFirstName(e.target.value) }} type="text" placeholder='First Name' className='border-1 border-gray-400 focus:outline-0   text-gray-600 font-[400] w-[48%] h-14 pl-5' />
-                                <input required onChange={(e) => { setLast(e.target.value) }} type="text" placeholder='Last Name' className='border-1 border-gray-400 focus:outline-0   text-gray-600 font-[400] w-[48%] h-14 pl-5' />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <input required onChange={(e) => setFirstName(e.target.value)} type="text" placeholder='First Name' className='h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
+                                <input required onChange={(e) => setLast(e.target.value)} type="text" placeholder='Last Name' className='h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
                             </div>
-                            <div className="AdressBox mb-4 mt-4">
-                                <input type="text" required onChange={(e) => { setAdress(e.target.value) }} placeholder='Address' className='border-1 border-gray-400 focus:outline-0   text-gray-600 font-[400] w-[100%] h-14 pl-5' />
+                            <input type="text" required onChange={(e) => setAdress(e.target.value)} placeholder='Address' className='w-full h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <input type="text" required onChange={(e) => setCity(e.target.value)} placeholder='City' className='h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
+                                <input type="text" required onChange={(e) => setPostal(e.target.value)} placeholder='Postal Code' className='h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
                             </div>
-                            <div className="AdressBox mb-4 mt-4 flex justify-between">
-                                <input type="text" required onChange={(e) => { setCity(e.target.value) }} placeholder='City' className='border-1 border-gray-400 focus:outline-0   text-gray-600 font-[400] w-[48%] h-14 pl-5' />
-                                <input type="text" required onChange={(e) => { setPostal(e.target.value) }} placeholder='Postal Code' className='border-1 border-gray-400 focus:outline-0   text-gray-600 font-[400] w-[48%] h-14 pl-5' />
-                            </div>
-                            <div className="Tickeer flex items-baseline gap-2">
-                                <div className="icons">  <input onChange={(e) => { setSaveForFuture(e.target.checked) }} type="checkbox" /></div>
-                                <div className="text text-gray-400">Save this info for future</div>
-                            </div>
-                        </div>
+                            <label className="flex items-center gap-3 cursor-pointer">
+                                <input onChange={(e) => setSaveForFuture(e.target.checked)} type="checkbox" className="w-4 h-4 rounded border-gray-300 text-black focus:ring-black" />
+                                <span className="text-sm text-gray-500 font-medium">Save this info for future</span>
+                            </label>
+                        </section>
 
-                        <div className="Payment mt-4  mb-4">
-                            <div className="Heading volkhov text-[25px] ">Payment</div>
-                            <div required className="CreditCard border-1   font-[400] w-[100%] flex justify-between items-center  h-10 pl-5 focus:outline-0 px-4  mt-4 ">
-                                <div className="Heading">
-                                    Credit Card
+                        <section className="flex flex-col gap-6">
+                            <h2 className="text-xl sm:text-2xl volkhov border-b border-gray-100 pb-2">Payment</h2>
+                            <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                                <div className="flex justify-between items-center bg-gray-50 px-6 py-4 border-b border-gray-100">
+                                    <span className="font-bold">Credit Card</span>
+                                    <select required onChange={(e) => setCreditCard(e.target.value)} className='bg-transparent text-sm font-medium focus:outline-none' >
+                                        <option value="Amazon Pay ICICI">Amazon Pay ICICI</option>
+                                        <option value="SBI Cashback">SBI Cashback</option>
+                                        {/* ... other options */}
+                                    </select>
                                 </div>
-                                <select required onChange={(e) => { setCreditCard(e.target.value) }} name="option" className='' >
-                                    <option name="Amazon Pay ICICI">Amazon Pay ICICI</option>
-                                    <option name="SBI Cashback">SBI Cashback</option>
-                                    <option name="Axis Bank ACE">Axis Bank ACE</option>
-                                    <option name="Flipkart SBI">Flipkart SBI</option>
-                                    <option name="HDFC Millennia">HDFC Millennia</option>
-                                    <option name="HDFC Regalia">HDFC Regalia</option>
-                                    <option name="ICICI Coral">ICICI Coral</option>
-                                    <option name="IDFC FIRST Select">IDFC FIRST Select</option>
-                                    <option name="Scapia Federal Bank">Scapia Federal Bank</option>
-                                    <option name="Ixigo AU">Ixigo AU</option>
-                                    <option name="HSBC RuPay Platinum">HSBC RuPay Platinum</option>
-                                    <option name="Kotak811">Kotak811</option>
-                                </select>
-
-                            </div>
-                            <div className="CardDetails bg-gray-300/30 px-4">
-
-
-
-                                <div className="AdressBox mb-4 pt-4">
-                                    <input required type="text" onChange={(e) => { setCardNumber(e.target.value) }} placeholder='Card Number' className='border-1 bg-white border-gray-400 focus:outline-0   text-gray-600 font-[400] w-[100%] h-14 pl-5' />
-                                </div>
-
-                                <div className="AdressBox mb-4 mt-4 flex justify-between">
-                                    <input required type="text" onChange={(e) => { setCardExpire(e.target.value) }} placeholder='Expire Date' className='border-1 bg-white border-gray-400 focus:outline-0   text-gray-600 font-[400] w-[48%] h-14 pl-5' />
-                                    <input required type="text" onChange={(e) => { setSecurity(e.target.value) }} placeholder='Security Code' className='border-1 bg-white border-gray-400 focus:outline-0   text-gray-600 font-[400] w-[48%] h-14 pl-5' />
-                                </div>
-
-                                <div className="AdressBox mb-4 mt-4">
-                                    <input required type="text" onChange={(e) => { setCardHolder(e.target.value) }} placeholder='Card Holder Name' className='border-1 bg-white border-gray-400 focus:outline-0   text-gray-600 font-[400] w-[100%] h-14 pl-5' />
-                                </div>
-                                <div className="Tickeer flex items-baseline gap-2">
-                                    <div className="icons">  <img src="../Routes/Products/image19.png" className='w-3 h-3' alt="" srcset="" /></div>
-                                    <div className="text text-gray-400">Save this info for future</div>
+                                <div className="p-6 flex flex-col gap-4">
+                                    <input required type="text" onChange={(e) => setCardNumber(e.target.value)} placeholder='Card Number' className='w-full h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <input required type="text" onChange={(e) => setCardExpire(e.target.value)} placeholder='MM/YY' className='h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
+                                        <input required type="text" onChange={(e) => setSecurity(e.target.value)} placeholder='CVV' className='h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
+                                    </div>
+                                    <input required type="text" onChange={(e) => setCardHolder(e.target.value)} placeholder='Card Holder Name' className='w-full h-14 border border-gray-200 rounded-xl px-5 focus:border-black outline-none transition-colors' />
                                 </div>
                             </div>
-                            <input type="submit" className="checkoutButton mt-6 bg-black text-white w-[100%] h-10 flex items-center justify-center rounded mx-auto shadow-2xl text-center" value={"Pay Now"} />
-                            <div className="Text text-[11px] mt-4 text-center">Copyright © 2022 FASCO . All Rights Reseved.</div>
+                            <button type="submit" className="w-full bg-black text-white py-5 rounded-2xl font-bold text-lg hover:bg-gray-800 transition-all shadow-xl shadow-black/20 active:scale-[0.98]">
+                                Pay Now
+                            </button>
+                            <p className="text-[10px] text-gray-400 text-center uppercase tracking-widest mt-2">Copyright © 2022 FASCO . All Rights Reserved.</p>
+                        </section>
+                    </form>
 
+                    {/* Right Section: Order Summary */}
+                    <div className="w-full lg:w-[40%]">
+                        <div className="bg-gray-50 rounded-3xl p-6 sm:p-8 sticky top-24 flex flex-col gap-8">
+                            <h3 className="text-xl volkhov">Order Summary</h3>
+                            
+                            <div className="flex items-center gap-4">
+                                <div className="w-20 h-24 bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex-shrink-0">
+                                    <img 
+                                      src={`http://localhost:3000/Products/${datas.ProductImage}`} 
+                                      className='w-full h-full object-cover' 
+                                      alt="Product" 
+                                    />
+                                </div>
+                                <div className="flex-grow flex flex-col gap-1">
+                                    <div className="text-sm font-bold volkhov">{datas.ProductName}</div>
+                                    <div className="text-xs text-gray-400">Color: Red</div>
+                                    <div className="text-sm font-bold mt-1">
+                                      ${datas.ProductSale ? percentagePrice(datas.ProductSale, datas.ProductPrice) : datas.ProductPrice}
+                                    </div>
+                                </div>
+                            </div>
 
-                        </div>
+                            <div className="flex gap-2">
+                                <input onChange={(e) => setDiscountCode(e.target.value)} type="text" placeholder='Discount code' className='flex-grow h-12 bg-white border border-gray-200 rounded-xl px-4 text-sm focus:border-black outline-none' />
+                                <button className="bg-black text-white px-6 rounded-xl text-xs font-bold hover:bg-gray-800 transition-colors">Apply</button>
+                            </div>
 
-                    </div>
-                </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <div className="MainBoxRIght  w-[50%] h-[40%]  flex justify-start  bg-gray-300/40">
-                    <div className="DataBox w-[60%] h-[100%] flex flex-col gap-4  m-14 ">
-
-                        <div className="Box1 flex items-center  ">
-                            <div className="flex w-140">  <div className="image">  <img src={`http://localhost:3000/Products/${productidis.ProductImage}`} className='w-25 h-30' alt="" srcset="" /></div>
-                                <div className="data flex flex-col  justify-center pl-3  w-[70%]">
-                                    <div className="Line1 font-bold text-[12px] volkhov">{productidis.ProductName}</div>
-                                    <div className="Line2 text-gray-400 text-[12px] volkhov">Red</div>
-                                </div></div>
-                            <div className="price ml-30 text-end mt-2 text-gray-400 text-[12px] volkhov">${percentagePrice(productidis.ProductSale, productidis.ProductPrice)}</div>
-                        </div>
-
-                        <div className="Box2 flex justify-between ">
-                            <div className="input  w-[78%] "><input onChange={(e) => { setDiscountCode(e.target.value) }} type="text" placeholder='Discount code' className='text-[13px] bg-white border-none  pl-4 w-[100%]  py-3 border-1' /></div>
-                            <div className="btn  w-[20%]">
-                                <div className="checkoutButton bg-black text-white  w-[100%] h-10 flex items-center justify-center rounded mx-auto shadow-2xl text-[11px]">Apply</div>
-
+                            <div className="flex flex-col gap-3 pt-6 border-t border-gray-200">
+                                <div className="flex justify-between text-sm">
+                                    <span className="text-gray-500 font-medium">Subtotal</span>
+                                    <span className="font-bold">
+                                      ${datas.ProductSale ?
+                                        OrderData[0].Wrap ? 10 + percentage(datas.ProductSale, datas.ProductPrice, OrderData[0].ProductQuantity) :
+                                        percentage(datas.ProductSale, datas.ProductPrice, OrderData[0].ProductQuantity) :
+                                        OrderData[0].Wrap ? 10 + datas.ProductPrice * OrderData[0].ProductQuantity : datas.ProductPrice * OrderData[0].ProductQuantity}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between text-sm">
+                                    <span className="text-gray-500 font-medium">Shipping</span>
+                                    <span className="font-bold">$40.00</span>
+                                </div>
+                                <div className="flex justify-between items-center pt-4 border-t border-gray-200">
+                                    <span className="text-lg font-bold">Total</span>
+                                    <span className="text-2xl font-bold">
+                                      ${datas.ProductSale ?
+                                        OrderData[0].Wrap ? 10 + percentage(datas.ProductSale, datas.ProductPrice, OrderData[0].ProductQuantity) + 40 :
+                                        percentage(datas.ProductSale, datas.ProductPrice, OrderData[0].ProductQuantity) + 40 :
+                                        OrderData[0].Wrap ? 10 + (datas.ProductPrice * OrderData[0].ProductQuantity) + 40 :
+                                        (datas.ProductPrice * OrderData[0].ProductQuantity) + 40}
+                                    </span>
+                                </div>
                             </div>
                         </div>
-
-                        <div className="Box3 flex flex-col gap-2">
-                            <div className="Subtotal flex justify-between text-gray-600 text-[12px] ">
-                                <div className="Line1">Subtotal</div>
-                                <div className="Line2">${OrderData[0].Wrap ? 10 + percentage(productidis.ProductSale, productidis.ProductPrice, OrderData[0].ProductQuantity) : percentage(productidis.ProductSale, productidis.ProductPrice, OrderData[0].ProductQuantity)}</div>
-                            </div>
-                            <div className="Shipping flex justify-between text-gray-600 text-[12px] ">
-                                <div className="Line1">Shipping</div>
-                                <div className="Line2">$40.00</div>
-                            </div>
-                            <div className="total flex justify-between text-gray-600 text-[12px] ">
-                                <div className="Line1">Total</div>
-                                <div className="Line2 text-black">${OrderData[0].Wrap ? 10 + percentage(productidis.ProductSale, productidis.ProductPrice, OrderData[0].ProductQuantity) + 40 : percentage(productidis.ProductSale, productidis.ProductPrice, OrderData[0].ProductQuantity) + 40}</div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </div>

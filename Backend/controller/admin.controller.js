@@ -101,40 +101,45 @@ const CreateProduct = async (req, res) => {
       ProductTags,
     } = req.body;
 
-    // ✅ check image
     if (!req.file) {
       return res.status(400).send("Product image is required");
     }
 
-    // ✅ create image path (frontend will use this)
-    const imagePath = `${req.file.filename}`;
+    const imagePath = req.file.filename;
 
-    // let Allusers=await AdminSignUp.findOne()
+    const updatedProduct = await ProductsSchema.findOneAndUpdate(
+      { ProductName: ProductName }, // 🔍 match condition
+      {
+        ProductCreatorEmail: CreatorAdmin,
+        ProductBrand: BrandName,
+        ProductName: ProductName,
+        ProductImage: imagePath,
+        ProductPrice: ProductPrice,
+        ProductCategory: ProductCategory,
+        ProductSale: 0,
+        ProductRating: 0,
+        ProductReviews: 0,
+        ProductStock: ProductStock,
+        SizeAvailable: Size,
+        ColorAvailable: ProductColors,
+        Tags: ProductTags,
+        DiscountCode: ProductCode,
+      },
+      {
+        new: true,      // return updated doc
+        upsert: true,   // 🔥 create if not exists
+      }
+    );
 
-    // console.log("Admin Products are ",Allusers)
-    await ProductsSchema.create({
-      ProductCreatorEmail: CreatorAdmin,
-      ProductBrand: BrandName,
-      ProductName: ProductName,
-      ProductImage: imagePath, // ✅ added here
-      ProductPrice: ProductPrice,
-      ProductCategory: ProductCategory, // ✅ fix typo
-      ProductSale: 0,
-      ProductRating: 0,
-      ProductReviews: 0,
-      ProductStock: ProductStock,
-      SizeAvailable: Size,
-      ColorAvailable: ProductColors,
-      Tags: ProductTags,
-      DiscountCode: ProductCode,
+    res.status(200).send({
+      message: "Product created/updated successfully",
+      product: updatedProduct,
     });
 
-    res.status(200).send("Product created successfully");
   } catch (err) {
     console.log("Create Product Error:", err);
     res.status(500).send("Server error");
   }
-  console.log("everything about creation ", req.body);
 };
 
 const GetAllProducts = async (req, res) => {

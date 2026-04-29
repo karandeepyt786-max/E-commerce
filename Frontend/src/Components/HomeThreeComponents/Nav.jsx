@@ -15,22 +15,24 @@ const Nav = () => {
   //   console.log("component rendered profile data in nav")
   // },[login])
   return (
-    <div id='Nav' className='flex items-center justify-center  h-[100px] '>
-      <div id="NavContent" className='flex w-[65%]  justify-between items-center '>
-        <div className='text-[35px] volkhov'>
+    <div id='Nav' className='flex items-center justify-center min-h-[80px] py-4'>
+      <div id="NavContent" className='flex w-[95%] lg:w-[80%] justify-between items-center gap-4'>
+
+        <div className='xl:text-[35px] lg:text-[30px] md:text-[28px] text-[24px] volkhov font-bold'>
             FASCO
         </div>
-        <ul className='flex gap-10 text-[calc(var(--LogoSize)-16px)] items-center '>
-            <Link to={"/"}  className='border-b border-transparent hover:border-black cursor-pointer'>Home</Link>
-            <li  className='border-b border-transparent hover:border-black cursor-pointer'>Deals</li>
-            <li  className='border-b border-transparent hover:border-black cursor-pointer'>New Arrivals</li>
-            <Link to={"/Shop"} className='border-b border-transparent hover:border-black cursor-pointer'>Shop</Link>
-           {login!==200 && <Link to={"/Signin"}  className='border-b border-transparent hover:border-black cursor-pointer'> Sign in </Link>} 
-           {login!==200 && <Link to={"/Signup"} className='border-1 px-6 py-2 rounded-[8px] bg-[#000000] text-[#FFFFFF]'>Sign up</Link>} 
-           {login==200 &&  <Link className='w-10 h-10     flex items-center justify-center  rounded-full  text-black relative ProfileMain  ' onClick={()=>{setShowProfile(!ShowProfile)}}><CgProfile  size={30}/>
+
+        <ul className='flex items-center gap-3 sm:gap-6 md:gap-10 text-[11px] sm:text-[13px] md:text-[14px]'>
+            <Link to={"/"} className='border-b border-transparent hover:border-black transition-all'>Home</Link>
+            <li className='hidden sm:block border-b border-transparent hover:border-black cursor-pointer transition-all'>Deals</li>
+            <li className='hidden lg:block border-b border-transparent hover:border-black cursor-pointer transition-all'>New Arrivals</li>
+            <Link to={"/Shop"} className='border-b border-transparent hover:border-black transition-all'>Shop</Link>
+           {login!==200 && <Link to={"/Signin"} className='hidden sm:block border-b border-transparent hover:border-black transition-all'>Sign in</Link>} 
+           {login!==200 && <Link to={"/Signup"} className='px-4 py-2 sm:px-6 sm:py-2 rounded-[8px] bg-black text-white text-[10px] sm:text-[13px] hover:bg-gray-800 transition-all'>Sign up</Link>} 
+           {login==200 &&  <Link className='w-10 h-10 flex items-center justify-center rounded-full text-black relative' onClick={()=>{setShowProfile(!ShowProfile)}}><CgProfile size={30}/>
            <ProfileData ShowProfile={ShowProfile} /></Link>}
-            
         </ul>
+
       </div>
     </div>
   )

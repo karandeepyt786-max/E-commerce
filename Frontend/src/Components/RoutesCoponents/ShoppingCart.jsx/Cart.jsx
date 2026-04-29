@@ -12,6 +12,7 @@ let Email = ""
 const Cart = (props) => {
 
   const UserOrdersIs = useSelector(state => state.User.Order)
+  console.log("user order is ",UserOrdersIs)
   const DispatchData = useDispatch()
 
   console.log("userorderis in the cart.jsx  ", UserOrdersIs)
@@ -160,173 +161,97 @@ useEffect(()=>{
   return (
     <>
 
-      <div className="Info1Box w-[75%]  ">
-        <ul cla className='flex justify-between'>
-          <li className='font-bold bg-black text-white p-1 px-2   '>Product</li>
-          <li className='font-bold bg-black text-white p-1 px-2   text-center'>Price</li>
-          <li className='font-bold bg-black text-white p-1 px-2   text-center '>Quantity</li>
-          <li className='font-bold bg-black text-white p-1 px-2   text-center'>Total</li>
-        </ul>
-      </div>
+      <div className="w-[95%] lg:w-[75%] mt-10">
+        <div className="hidden sm:grid grid-cols-4 bg-black text-white p-4 rounded-t-xl text-sm font-bold uppercase tracking-wider">
+          <div>Product</div>
+          <div className="text-center">Price</div>
+          <div className="text-center">Quantity</div>
+          <div className="text-right">Total</div>
+        </div>
 
-      {
-        CartData.Cart && CartData.Cart.map((ite, index) =>
-        (
-
-          <div className='w-[75%] h-auto flex flex-col '>
-            <div className="top " onClick={() => { setHiddenIndex(index) }}>
-
-              <hr className='mb-4 mt-4 border-gray-100 border-2' />
-
-              <div className='w-[100%] h-32  flex '>
-
-                <div className="Box1 w-83">
-                  <div className="Box3 flex  ">
-                    <div className="ImageBox"><img src={`http://localhost:3000/Products/${ite.ProductDataById
-                      .ProductImage}`} className='w-25 h-32' alt="" srcset="" /></div>
-                    <div className="DetailsBox pl-3 flex flex-col gap-1">
-                      <div className="Name font-bold volkhov">{ite.ProductDataById
-                        .ProductName} </div>
-                      <div className="Color text-gray-400">Color : {ite.Color}</div>
-                      <div className="Color text-gray-400 mt-2" onClick={() => { RemoveFromCart(ite) }} >Remove</div>
-                    </div>
-                  </div>
+        {CartData.Cart && CartData.Cart.map((ite, index) => (
+          <div key={index} className='w-full border-b border-gray-100 py-6'>
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-6 items-center" onClick={() => setHiddenIndex(index)}>
+              
+              {/* Product Info */}
+              <div className="flex gap-4 items-center">
+                <img src={`http://localhost:3000/Products/${ite.ProductDataById.ProductImage}`} className='w-20 h-24 object-cover rounded-lg' alt={ite.ProductDataById.ProductName} />
+                <div className="flex flex-col gap-1">
+                  <div className="font-bold text-[#484848] volkhov">{ite.ProductDataById.ProductName}</div>
+                  <div className="text-xs text-gray-400">Color: {ite.Color}</div>
+                  <button className="text-xs text-red-500 hover:underline mt-1 text-left w-max" onClick={(e) => { e.stopPropagation(); RemoveFromCart(ite); }}>Remove</button>
                 </div>
-
-                <div className="Box2 w-73">
-                  <div className="Price font-bold volkhov">$
-                    {Checked && 
-                      ite.ProductDataById.ProductSale ?
-                        percentageByPrice(Number(ite.ProductDataById.ProductSale), Number(ite.ProductDataById.ProductPrice),) :
-                        ite.ProductDataById.ProductPrice }
-
-                  </div>
-                </div>
-
-                <div className="Box3 w-80 ">
-                  <div className="Quantity flex w-30 h-10  border-1 border-gray-400 rounded items-center justify-around">
-
-                    <div className="Remove text-[17px]" onClick={(e) => { DecreaseQuantity(index) }}>-</div>
-
-                    <div className="AddRemoveNumber text-[14px]"> {Checked ? Checked[index].ProductQuantity ? Checked[index].ProductQuantity : "" : ite.ProductQuantity}</div>
-
-                    <div className="Add text-[17px] " onClick={() => { IncreaseQuantity(index) }}>+</div>
-
-                  </div>
-                </div>
-
-                <div className="Box4 w-20 text-end">
-                  <div className="Price font-bold volkhov">$
-
-                    {Checked ? 
-                     Checked[index].ProductQuantity ?ite.ProductDataById.ProductSale?
-
-                      (Checked[index].Wrap ? 10 + percentage(
-                        Number(ite.ProductDataById.ProductSale),
-                        Number(ite.ProductDataById.ProductPrice),
-                        Number(Checked[index].ProductQuantity)
-                      ) : percentage(
-                        Number(ite.ProductDataById.ProductSale),
-                        Number(ite.ProductDataById.ProductPrice),
-                        Number(Checked[index].ProductQuantity)
-                      )) : ite.ProductDataById.ProductPrice*Checked[index].ProductQuantity:""
-                      :
-                      (ite.Wrap || (Checked && Checked[index].Wrap) ? 10 + percentage(
-                        Number(ite.ProductDataById.ProductSale),
-                        Number(ite.ProductDataById.ProductPrice),
-                        Number(ite.ProductQuantity)
-                      ) : percentage(
-                        Number(ite.ProductDataById.ProductSale),
-                        Number(ite.ProductDataById.ProductPrice),
-                        Number(ite.ProductQuantity)
-                      ))
-                    }
-
-
-
-                  </div>
-
-                </div>
-
               </div>
-              <div className="Boredr">
-                <hr className='mb-4 mt-4 border-gray-100 self-end border-2' />
+
+              {/* Price */}
+              <div className="flex justify-between sm:justify-center items-center sm:text-center">
+                <span className="sm:hidden text-xs font-bold text-gray-400 uppercase">Price</span>
+                <div className="font-bold text-[#484848]">
+                  ${ite.ProductDataById.ProductSale ? 
+                    (ite.ProductDataById.ProductPrice - percentageByPrice(Number(ite.ProductDataById.ProductSale), Number(ite.ProductDataById.ProductPrice))).toFixed(2) : 
+                    ite.ProductDataById.ProductPrice}
+                </div>
+              </div>
+
+              {/* Quantity */}
+              <div className="flex justify-between sm:justify-center items-center">
+                <span className="sm:hidden text-xs font-bold text-gray-400 uppercase">Quantity</span>
+                <div className="flex items-center border border-gray-200 rounded-lg h-9 px-2 gap-4">
+                  <button className="w-6 h-6 flex items-center justify-center hover:bg-gray-100 rounded" onClick={(e) => { e.stopPropagation(); DecreaseQuantity(index); }}>-</button>
+                  <span className="text-sm font-medium w-4 text-center">{Checked ? (Checked[index]?.ProductQuantity || "") : ite.ProductQuantity}</span>
+                  <button className="w-6 h-6 flex items-center justify-center hover:bg-gray-100 rounded" onClick={(e) => { e.stopPropagation(); IncreaseQuantity(index); }}>+</button>
+                </div>
+              </div>
+
+              {/* Total */}
+              <div className="flex justify-between sm:justify-end items-center sm:text-right">
+                <span className="sm:hidden text-xs font-bold text-gray-400 uppercase">Total</span>
+                <div className="font-bold text-[#484848]">
+                  $ {Checked && Checked[index]?.ProductQuantity ? 
+                    (Checked[index].ProductQuantity * (ite.ProductDataById.ProductSale ? (ite.ProductDataById.ProductPrice - percentageByPrice(Number(ite.ProductDataById.ProductSale), Number(ite.ProductDataById.ProductPrice))) : ite.ProductDataById.ProductPrice) + (Checked[index].Wrap ? 10 : 0)).toFixed(2) : 
+                    "0.00"}
+                </div>
               </div>
             </div>
 
-            <div className={`Bottom  w-120 self-end ${HiddenIndex === index ? "" : "hidden"}`}>
-              {<div className="Tickeer flex items-baseline gap-2">
-
-
-
-
-
-                <div className="icons"> <input checked={Checked ? Checked[index].Wrap : false} onChange={() => { CheckingData(index) }} type="checkbox" /> </div>
-
-
-
-
-                <div className="text text-gray-400">For <span className='font-bold text-black font-bold'>$10.00</span> please wrap the product</div>
-
-
-
-
-
-
-              </div>}
-              <hr className='border-1 border-gray-100 mb-8 mt-4' />
-              <div className="Subtotal flex  justify-between font-bold">
-                <div className="left">Subtotal</div>
-                <div className="right">$
-                  {/* {Checked ? Checked[index].ProductQuantity ?
-
-                    (ite.Wrap  || Checked[index].Wrap  ? 10 + percentage(
-                      Number(ite.ProductDataById.ProductSale),
-                      Number(ite.ProductDataById.ProductPrice),
-                      Number(Checked[index].ProductQuantity)
-                    ) : percentage(
-                      Number(ite.ProductDataById.ProductSale),
-                      Number(ite.ProductDataById.ProductPrice),
-                      Number(Checked[index].ProductQuantity)
-                    )) : ""
-                    :
-                    ((Checked && Checked[index].Wrap) ? 10 + percentage(
-                      Number(ite.ProductDataById.ProductSale),
-                      Number(ite.ProductDataById.ProductPrice),
-                      Number(ite.ProductQuantity)
-                    ) : percentage(
-                      Number(ite.ProductDataById.ProductSale),
-                      Number(ite.ProductDataById.ProductPrice),
-                      Number(ite.ProductQuantity)
-                    ))
-                  } */}
-
-                  {Checked ?
-                   Checked[index].ProductQuantity?
-                   (Checked[index].ProductQuantity && ite.ProductDataById.ProductSale)?
-                  Checked[index].Wrap?10+
-                     percentage(
-                      Number(ite.ProductDataById.ProductSale),
-                      Number(ite.ProductDataById.ProductPrice),
-                      Number(Checked[index].ProductQuantity)
-                    ):percentage(
-                      Number(ite.ProductDataById.ProductSale),
-                      Number(ite.ProductDataById.ProductPrice),
-                      Number(Checked[index].ProductQuantity)
-                    ): Checked[index].Wrap?10+(ite.ProductDataById.ProductPrice * Checked[index].ProductQuantity):(ite.ProductDataById.ProductPrice * Checked[index].ProductQuantity)
-                   :0:0 }
-
-                </div>
+            {/* Subtotal Section (Expandable) */}
+            <div className={`mt-6 p-6 bg-gray-50 rounded-2xl flex flex-col gap-4 max-w-md ml-auto ${HiddenIndex === index ? "" : "hidden"}`}>
+              <div className="flex items-center gap-3">
+                <input 
+                  type="checkbox" 
+                  className="w-4 h-4 rounded border-gray-300"
+                  checked={Checked ? Checked[index]?.Wrap : false} 
+                  onChange={() => { CheckingData(index) }} 
+                />
+                <span className="text-sm text-gray-600">For <span className='font-bold text-black'>$10.00</span> please wrap the product</span>
               </div>
-              <Link to={"/Checkout"} onClick={() => { DispatchData(UserOrder({ data: Checked[index] })) }} className="checkoutButton mt-6 bg-black text-white w-[100%] h-10 flex items-center justify-center rounded mx-auto shadow-2xl">
-                Checkout
+              
+              <div className="flex justify-between items-center border-t border-gray-200 pt-4">
+                <span className="font-bold text-[#484848]">Subtotal</span>
+                <span className="font-bold text-xl text-black">
+                  $ {Checked && Checked[index]?.ProductQuantity ? 
+                    (Checked[index].ProductQuantity * (ite.ProductDataById.ProductSale ? (ite.ProductDataById.ProductPrice - percentageByPrice(Number(ite.ProductDataById.ProductSale), Number(ite.ProductDataById.ProductPrice))) : ite.ProductDataById.ProductPrice) + (Checked[index].Wrap ? 10 : 0)).toFixed(2) : 
+                    "0.00"}
+                </span>
+              </div>
+
+              <Link 
+                to="/Checkout" 
+                onClick={() => { DispatchData(UserOrder({ data: Checked[index] }));console.log("checked data is the ",Checked[index]) }} 
+                className="w-full bg-black text-white py-3 rounded-xl font-bold text-center hover:bg-gray-800 transition-colors shadow-lg shadow-black/10"
+              >
+                Proceed to Checkout
               </Link>
-              <div onClick={() => { sendingData() }} className="ViewCart font-bold volkhov text-center pt-4 pb-4 underline">View Cart</div>
+              <button 
+                onClick={() => { sendingData() }} 
+                className="text-xs font-bold uppercase tracking-wider text-center hover:underline"
+              >
+                Refresh Cart
+              </button>
             </div>
           </div>
-
-        ))
-      }
+        ))}
+      </div>
 
 
     </>

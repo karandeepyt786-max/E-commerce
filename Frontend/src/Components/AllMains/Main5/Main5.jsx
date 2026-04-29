@@ -3,69 +3,42 @@ import React from 'react'
 const Main5 = () => {
   return (
    <>
-    <div className='w-[100%] h-90 overflow-hidden bg-amber-300  flex relative '>
-       
-            <img src="../Main5/image1.png" className='w-[55%] h-90' alt="" srcset="" />
-   
-    
-                                    {/* <img className='absolute h-70 left-99 rotate-y-24 ' src="../Main5/image2.png" alt="" srcset="" /> */}
-<div className="bo absolute border-1 h-100 left-[667px] rotate-18 top-[-10px] z-10" ></div>
-     
-     
-                        {/* <img src="../Main5/image3.png " className='w-[55%] h-70 absolute right-0' alt="" srcset="" /> */}
-                        <div style={{backgroundImage:"url('../Main5/image3.png')"}} className='w-[74%] h-90 absolute right-0'>
-<div className="Contents w-[50%] absolute right-0 py-6 pr-30 flex flex-col gap-y-1">
-    <div className="Title text-[#767676] text-[10px]">Women Collection</div>
-    <div className="Heading text-[#484848] text-[26px] font-bold volkhov" >Peaky Blinders</div>
-    <div className="Description text-[#000000] text-[11px] font-bold underline">DESCRIPTION</div>
-    <div className="DescriptionData text-[#767676] text-[10px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis. </div>
-    <div className="Size text-[#767676] flex text-[13px] gap-1">Size :  <div className="SizeBox text-white bg-black w-7 h-5 flex rounded  items-center justify-center text-[10px]">M</div></div>
-    <div className="Price font-bold flex  text-[17px]">$100. <div className="smallPrice">00</div></div>
-    <div className="BuyButton bg-black text-white text-[13px] w-23 h-8 flex items-center justify-center rounded">Buy Now</div>
-</div>
-                        </div>
-                        
+    <div className='w-full flex flex-col md:flex-row bg-[#F5F5F5] overflow-hidden'>
+      <div className='w-full md:w-1/2 h-[300px] md:h-[500px]'>
+        <img src="../Main5/image1.png" className='w-full h-full object-cover' alt="Collection" />
+      </div>
+      <div className='w-full md:w-1/2 p-8 md:p-12 lg:p-20 flex flex-col justify-center gap-4'>
+        <div className="text-[#767676] text-sm uppercase tracking-wider">Women Collection</div>
+        <div className="text-[#484848] text-3xl md:text-4xl lg:text-5xl font-bold volkhov">Peaky Blinders</div>
+        <div className="text-[#000000] text-sm font-bold underline cursor-pointer">DESCRIPTION</div>
+        <p className="text-[#767676] text-sm leading-relaxed max-w-md">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Scelerisque duis ultrices sollicitudin aliquam sem. Scelerisque duis ultrices sollicitudin.
+        </p>
+        <div className="flex items-center gap-3 text-sm text-[#767676]">
+          Size : <span className="bg-black text-white px-3 py-1 rounded text-xs">M</span>
+        </div>
+        <div className="text-2xl font-bold">$100.00</div>
+        <button className="bg-black text-white px-8 py-3 rounded-md w-max hover:bg-gray-800 transition-colors">
+          Buy Now
+        </button>
+      </div>
+    </div>
 
-     
-    </div>
-    <div className="Services w-[100%] h-50  gap-6    top-40  flex justify-center py-5">
-<div className="Box1 w-50 h-20 flex items-center justify-center ">
-    <div className="icons flex gap-2 items-center justify-center">
-        <img src="../Main5/image4.png" className='w-7 '  alt="" srcset="" />
-        <div className="Content ">
-            <div className="TopContent text-[14px] text-[#484848] font-medium">High Quality</div>
-            <div className="BottomContent text-[10px] text-[#484848]">crafted from top materials</div>
+    <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-8 px-6 py-16 bg-white border-t">
+      {[
+        { img: "../Main5/image4.png", title: "High Quality", desc: "crafted from top materials" },
+        { img: "../Main5/image5.png", title: "Warranty Protection", desc: "Over 2 years" },
+        { img: "../Main5/image6.png", title: "Free Shipping", desc: "Order over $150" },
+        { img: "../Main5/image7.png", title: "24 / 7 Support", desc: "Dedicated support" }
+      ].map((service, i) => (
+        <div key={i} className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-4">
+          <img src={service.img} className='w-10 h-10 object-contain' alt={service.title} />
+          <div>
+            <div className="text-base font-semibold text-[#484848]">{service.title}</div>
+            <div className="text-xs text-[#8A8A8A]">{service.desc}</div>
+          </div>
         </div>
-    </div>
-</div>
-<div className="Box1 w-50 h-20 flex items-center justify-center">
-    <div className="icons flex gap-2 items-center justify-center">
-        <img src="../Main5/image5.png" className='w-7 '  alt="" srcset="" />
-        <div className="Content ">
-            <div className="TopContent text-[14px] text-[#484848] font-medium">Warrany Protection</div>
-            <div className="BottomContent text-[10px] text-[#484848]">Over 2 years</div>
-        </div>
-    </div>
-</div>
-<div className="Box1 w-50 h-20 flex items-center justify-center">
-    <div className="icons flex gap-2 items-center justify-center">
-        <img src="../Main5/image6.png" className='w-7 '  alt="" srcset="" />
-        <div className="Content ">
-            <div className="TopContent text-[14px] text-[#484848] font-medium">Free Shipping</div>
-            <div className="BottomContent text-[10px] text-[#484848]">Order over 150 $</div>
-        </div>
-    </div>
-</div>
-<div className="Box1 w-50 h-20 flex items-center justify-center">
-    <div className="icons flex gap-2 items-center justify-center">
-        <img src="../Main5/image7.png" className='w-7 '  alt="" srcset="" />
-        <div className="Content ">
-            <div className="TopContent text-[14px] text-[#484848] font-medium">24 / 7 Support</div>
-            <div className="BottomContent text-[10px] text-[#484848]">Dedicated support</div>
-        </div>
-    </div>
-</div>
-
+      ))}
     </div>
 
     </>

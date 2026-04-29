@@ -29,7 +29,7 @@ import Order from './Components/RoutesCoponents/Order/Order'
 
 const App = () => {
   return (
-    <div className='w-[calc(98vw+12px)]  overflow-hidden '>
+    <div className='w-full overflow-x-hidden'>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/Shop' element={<Shop />} />

@@ -15,9 +15,11 @@ createRoot(document.getElementById('root')).render(
     <BrowserRouter>
   <Provider store={store}>
 
- <Layout/>
+<div className="w-full  overflow-hidden">
+   <Layout/>
     <App />
     <Layout2/>
+</div>
   </Provider>
     </BrowserRouter>
 )

@@ -2,34 +2,20 @@ import React from 'react'
 
 const Left = (props) => {
   return (
-    <div className='w-[40%] h-110   flex '>
-      <div className="Left h-[100%]">
-        <div className="Box flex flex-col justify-around  h-[100%]">
-         <div className="imagparent w-11 h-13 rounded hover:border-1 flex items-center justify-center">
-           <img src="../Routes/Products/image1.png" className='w-7 h-10' alt="" srcset="" />
-         </div>
-         <div className="imagparent w-11 h-13 rounded hover:border-1 flex items-center justify-center">
-           <img src="../Routes/Products/image2.png" className='w-7 h-10' alt="" srcset="" />
-         </div>
-         <div className="imagparent w-11 h-13 rounded hover:border-1 flex items-center justify-center">
-           <img src="../Routes/Products/image13.png" className='w-7 h-10' alt="" srcset="" />
-         </div>
-         <div className="imagparent w-11 h-13 rounded hover:border-1 flex items-center justify-center">
-           <img src="../Routes/Products/image14.png" className='w-7 h-10' alt="" srcset="" />
-         </div>
-         <div className="imagparent w-11 h-13 rounded hover:border-1 flex items-center justify-center">
-           <img src="../Routes/Products/image15.png" className='w-7 h-10' alt="" srcset="" />
-         </div>
-         <div className="imagparent w-11 h-13 rounded hover:border-1 flex items-center justify-center">
-           <img src="../Routes/Products/image16.png" className='w-7 h-10' alt="" srcset="" />
-         </div>
-         <div className="imagparent w-11 h-13 rounded hover:border-1    flex items-center justify-center">
-           <img src="../Routes/Products/image17.png" className='w-7 h-10' alt="" srcset="" />
-         </div>
-        </div>
+    <div className='w-full lg:w-[45%] flex flex-col-reverse lg:flex-row gap-4'>
+      <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-y-auto no-scrollbar py-2 lg:py-0 hidden">
+        {[1, 2, 13, 14, 15, 16, 17].map((num) => (
+          <div key={num} className="flex-shrink-0 w-16 h-20 sm:w-20 sm:h-24 rounded-xl border border-gray-100 hover:border-black transition-colors cursor-pointer flex items-center justify-center bg-gray-50 overflow-hidden">
+            <img src={`../Routes/Products/image${num}.png`} className='w-full h-full object-cover' alt={`Thumbnail ${num}`} />
+          </div>
+        ))}
       </div>
-      <div className="Right w-[80%] ml-2">
-        <img src={`http://localhost:3000/Products/${props.imgSrc}`} className='w-[100%] h-[100%] contain' alt="" srcset="" />
+      <div className="flex-grow bg-gray-50 rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-square lg:aspect-[4/5]">
+        <img 
+          src={`http://localhost:3000/Products/${props.imgSrc}`} 
+          className='w-full h-full object-cover hover:scale-110 transition-transform duration-500' 
+          alt="Main Product" 
+        />
       </div>
     </div>
   )
