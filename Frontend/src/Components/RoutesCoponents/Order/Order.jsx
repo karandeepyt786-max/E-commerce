@@ -94,8 +94,8 @@ const Order = () => {
                   alt={ite.product.ProductName}
                 />
               </div>
-
-              <div className="flex flex-col gap-2">
+cc{ite.ProductQuantity
+}              <div className="flex flex-col gap-2">
                 <div className="flex justify-between items-start">
                   <h3 className="text-lg font-bold text-[#484848] truncate pr-2">{ite.product.ProductName}</h3>
                   {ite.Wrap && <span className="bg-amber-100 text-amber-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Wrapped</span>}

@@ -226,7 +226,7 @@ const Order = async (req, res) => {
         $set: {
           "Orders.$.ProductData.Size": Size,
           "Orders.$.ProductData.Color": Color,
-          "Orders.$.ProductData.ProductQuantity": ProductQuantity,
+          "Orders.$.ProductData.ProductQuantity": req.body.Quantity,
           "Orders.$.ProductData.Wrap": Wrap,
 
           "Orders.$.shippingAddress": {

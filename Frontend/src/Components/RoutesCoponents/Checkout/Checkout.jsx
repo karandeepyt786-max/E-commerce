@@ -12,6 +12,8 @@ const Checkout = () => {
 
 const datas=OrderData[0]?.ProductDataById?OrderData[0].ProductDataById:OrderData[0]
 
+
+
 const productidis = OrderData[0]._id
 console.log("data is the ",datas,' image is ',datas.ProductImage," the product id is the ",productidis)
 console.log("oreder 0 is the ",OrderData[0].ProductDataById._id)
@@ -49,6 +51,8 @@ console.log("oreder 0 is the ",OrderData[0].ProductDataById._id)
     const [Security, setSecurity] = useState("")
     const [CardHolder, setCardHolder] = useState("")
     const [DiscountCode, setDiscountCode] = useState("")
+
+    const[TotalPrice,setTotalPrice]=useState(0)
 
     // console.log(Email, UnitedState, FirstName, Last, Adress, City, Postal, SaveForFuture,
     //     CreditCard, CardNumber, CardExpire, Security, CardHolder, DiscountCode
@@ -102,7 +106,7 @@ console.log("OrderData from the checkout ", (OrderData[0])," UserAllInformation 
         e.preventDefault()
       
         try {
-            const data = await axios.post("http://localhost:3000/user/Order", { UserAllInformation: UserAllInformation,ProductData:datas,productidis:productidis }, { withCredentials: true })
+            const data = await axios.post("http://localhost:3000/user/Order", { UserAllInformation: UserAllInformation,ProductData:datas,productidis:productidis,Quantity:OrderData[0].ProductQuantity }, { withCredentials: true })
             console.log("Add To Order ", data.data)
         }
         catch (err) {   
@@ -127,6 +131,9 @@ console.log("OrderData from the checkout ", (OrderData[0])," UserAllInformation 
     useEffect(() => {
         console.log("Single from cheekcout  ", SingleIs)
     })
+
+
+
 
     return (
         <div className='w-full min-h-screen bg-white'>
@@ -239,11 +246,17 @@ console.log("OrderData from the checkout ", (OrderData[0])," UserAllInformation 
                                 <div className="flex justify-between items-center pt-4 border-t border-gray-200">
                                     <span className="text-lg font-bold">Total</span>
                                     <span className="text-2xl font-bold">
+
                                       ${datas.ProductSale ?
                                         OrderData[0].Wrap ? 10 + percentage(datas.ProductSale, datas.ProductPrice, OrderData[0].ProductQuantity) + 40 :
                                         percentage(datas.ProductSale, datas.ProductPrice, OrderData[0].ProductQuantity) + 40 :
                                         OrderData[0].Wrap ? 10 + (datas.ProductPrice * OrderData[0].ProductQuantity) + 40 :
                                         (datas.ProductPrice * OrderData[0].ProductQuantity) + 40}
+                                        
+                                      
+
+                                      
+
                                     </span>
                                 </div>
                             </div>

@@ -1,32 +1,19 @@
 import mongoose  from "mongoose";
 
-const AdminSignupSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  emailAddress: String,
-  phoneNumber: Number,
-  password: String,
+  const AdminSignupSchema = new mongoose.Schema({
+    firstName: String,
+    lastName: String,
+    emailAddress: String,
+    phoneNumber: Number,
+    password: String,
 
-  ProductsCreated: [
-    {
-      ProductCreatorEmail: String,
-      ProductBrand: String,
-      ProductName: String,
-      ProductImage: String,
-      ProductPrice: Number,
-      ProductCategory: String, // ✅ fixed typo
-      ProductSale: { type: Number, default: 0 },
-      ProductRating: { type: Number, default: 0 },
-      ProductReviews: { type: Number, default: 0 },
-      ProductStock: { type: Number, default: 0 },
-ProductQuantity:{type:Number,default:1},
-      SizeAvailable: [String],   // ✅ fixed
-      ColorAvailable: [String],  // ✅ fixed
-      Tags: [String],             // ✅ fixed
-      DiscountCode:Number
-    }
-  ]
-});
-const AdminSignUp = mongoose.model("AdminSignup",AdminSignupSchema)
+
+  });
+const AdminSignUp = mongoose.model("Admin",AdminSignupSchema,"Admin")
 
 export default AdminSignUp
+
+// karandeepyt786_db_user
+// karan@098765
+// mongodb+srv://karandeepyt786_db_user:karan@098765@cluster0.n7pqtsz.mongodb.net/:
+// mongodb+srv://karandeepyt786_db_user:<db_password>@cluster0.n7pqtsz.mongodb.net/

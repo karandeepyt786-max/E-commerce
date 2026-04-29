@@ -46,6 +46,6 @@ Wrap:Boolean
 ]
 })
 
-const userSignUp = mongoose.model("userSignup",userSignupSchema)
+const userSignUp = mongoose.model("User",userSignupSchema)
 
 export default userSignUp
