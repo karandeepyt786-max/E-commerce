@@ -38,8 +38,8 @@ const uploadImage = async (UploadingPath,dirPath) => {
     console.log("2");
     console.log("cloudinary response ", result);
     console.log("Public id is ", result.public_id);
-  } catch (error) {
-    console.error("cloudinary error is  ", error);
+  } catch (err) {
+    console.error(err.message);
   }
 };
 
