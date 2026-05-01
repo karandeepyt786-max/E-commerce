@@ -108,8 +108,8 @@ const Signup = () => {
                 <input required type="tel" maxLength={10} name='Phone' className='border-b border-gray-200 py-2 text-sm focus:border-black outline-none transition-colors' placeholder='Phone Number' />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <input required type="password" name='Password' className='border-b border-gray-200 py-2 text-sm focus:border-black outline-none transition-colors' placeholder='Password' />
-                <input required type="password" name='confirmPassword' className='border-b border-gray-200 py-2 text-sm focus:border-black outline-none transition-colors' placeholder='Confirm Password' />
+                <input required type="password" name='Password' autocomplete="new-password" className='border-b border-gray-200 py-2 text-sm focus:border-black outline-none transition-colors' placeholder='Password' />
+                <input required type="password" name='confirmPassword' autocomplete="new-password" className='border-b border-gray-200 py-2 text-sm focus:border-black outline-none transition-colors' placeholder='Confirm Password' />
               </div>
               
               <button type='submit' className="w-full bg-black text-white py-4 rounded-xl font-bold shadow-lg shadow-black/20 hover:bg-gray-800 transition-colors mt-4">
