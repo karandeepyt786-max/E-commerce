@@ -17,7 +17,7 @@ const UserCart = () => {
         <div key={index} className='w-full max-w-[280px] bg-white rounded-3xl p-4 shadow-sm border border-gray-100 flex flex-col gap-4 hover:shadow-md transition-shadow'>
           <div className="w-full aspect-[4/3] overflow-hidden rounded-2xl bg-gray-50">
             <img 
-              src={`http://localhost:3000/Products/${ite.ProductImage}`} 
+              src={`https://e-commerce-backend-2-zmoo.onrender.com/Products/${ite.ProductImage}`} 
               className='w-full h-full object-cover' 
               alt={ite.ProductName} 
             />

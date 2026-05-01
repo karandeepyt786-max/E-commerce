@@ -44,14 +44,14 @@ const CreateProduct = () => {
 
         if (CreatorAdmin) {
             try {
-                await axios.post("http://localhost:3000/Admin/CreateProduct", { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductStock: ProductStock }, {
+                await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/Admin/CreateProduct", { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductStock: ProductStock }, {
                     withCredentials: true, headers: {
                         "Content-Type": "multipart/form-data"
                     }
                 }).then((data) => {
                     console.log("create product data ", data)
                         .catch((err) => {
-                            console.log("Product create error ", err)
+                            console.log(err.message)
                         })
                 })
 console.log(
@@ -63,7 +63,7 @@ console.log(
                 console.log(formData.get("mobile"))
             }
             catch (err) {
-                console.log("signin Error ", err)
+                console.log(err.message)
             }
         }
 

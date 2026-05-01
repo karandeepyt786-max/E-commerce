@@ -16,11 +16,11 @@ const ChangeSales = () => {
 
 
     try {
-      let response = await axios.post("http://localhost:3000/Admin/AddSales", { SaleCategory: Sale, SalePercentage: formdata.get("percentage") }, { withCredentials: true })
+      let response = await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/Admin/AddSales", { SaleCategory: Sale, SalePercentage: formdata.get("percentage") }, { withCredentials: true })
       console.log(response.data)
     }
     catch (err) {
-      console.log("sale by category ", err)
+      console.log(err.message)
     }
 
 

@@ -6,7 +6,7 @@ const Connection=async()=>{
     console.log("Connection Success")
 }
 catch(err){
-    console.log("error occured")
+    console.log(err.message)
 }
 }
 

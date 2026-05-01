@@ -31,7 +31,7 @@ const Cart = (props) => {
 
   const isLogInOut = async () => {
     try {
-      await axios.post("http://localhost:3000/user/isLoginOut", {}, { withCredentials: true }).then((data) => {
+      await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/user/isLoginOut", {}, { withCredentials: true }).then((data) => {
         let resposeuserdata = data.data.data.emailAddress
         Email = resposeuserdata
         console.log("Email in sign ", Email)
@@ -39,17 +39,17 @@ const Cart = (props) => {
       sendingData()
     }
     catch (err) {
-      console.log("loginout CartStart error ", err)
+      console.log(err.message)
     }
   }
 
   const sendingData = async () => {
     try {
-      const CartSending = await axios.post(`http://localhost:3000/user/CartGetter`, { Email: Email }, { withCredentials: true })
+      const CartSending = await axios.post(`https://e-commerce-backend-2-zmoo.onrender.com/user/CartGetter`, { Email: Email }, { withCredentials: true })
       setCartData(CartSending.data)
     }
     catch (err) {
-      console.log("Cart user Cart Creation error ", err)
+      console.log(err.message)
     }
   }
 
@@ -112,11 +112,11 @@ const Cart = (props) => {
     setRemove(!Remove)
 
     try {
-      await axios.delete(`http://localhost:3000/user/CartDelete`, { data: { Email: Email, ProductId: data._id }, withCredentials: true })
+      await axios.delete(`https://e-commerce-backend-2-zmoo.onrender.com/user/CartDelete`, { data: { Email: Email, ProductId: data._id }, withCredentials: true })
 
     }
     catch (err) {
-      console.log("Cart user Cart Creation error ", err)
+      console.log(err.message)
     }
   }
 
@@ -124,11 +124,11 @@ const Cart = (props) => {
 
     console.log("Order index is ", ind, Checked[ind])
     try {
-      const CartSending = await axios.post(`http://localhost:3000/user/Order`, { Email: Email, data: Checked[ind] }, { withCredentials: true })
+      const CartSending = await axios.post(`https://e-commerce-backend-2-zmoo.onrender.com/user/Order`, { Email: Email, data: Checked[ind] }, { withCredentials: true })
       setCartData(CartSending.data)
     }
     catch (err) {
-      console.log("Cart user Cart Creation error ", err)
+      console.log(err.message)
     }
   }
 
@@ -175,7 +175,7 @@ useEffect(()=>{
               
               {/* Product Info */}
               <div className="flex gap-4 items-center">
-                <img src={`http://localhost:3000/Products/${ite.ProductDataById.ProductImage}`} className='w-20 h-24 object-cover rounded-lg' alt={ite.ProductDataById.ProductName} />
+                <img src={`https://e-commerce-backend-2-zmoo.onrender.com/Products/${ite.ProductDataById.ProductImage}`} className='w-20 h-24 object-cover rounded-lg' alt={ite.ProductDataById.ProductName} />
                 <div className="flex flex-col gap-1">
                   <div className="font-bold text-[#484848] volkhov">{ite.ProductDataById.ProductName}</div>
                   <div className="text-xs text-gray-400">Color: {ite.Color}</div>

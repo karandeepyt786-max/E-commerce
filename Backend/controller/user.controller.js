@@ -128,7 +128,7 @@ const Cart = async (req, res) => {
         console.log("not exist");
       }
     } catch (err) {
-      console.log("Cart error is ", err);
+      console.log(err.message);
     }
     console.log(" not find");
   } else {
@@ -189,7 +189,7 @@ const CartGetter = async (req, res) => {
     console.log("Crt data is ", data);
     res.send(data);
   } catch (err) {
-    console.log("the error from the cartgetter is ", err);
+    console.log(err.message);
   }
 };
 
@@ -293,7 +293,7 @@ const Order = async (req, res) => {
           : "Order updated successfully",
     });
   } catch (err) {
-    console.log("Error while Adding/Updating order ", err);
+    console.log(err.message);
     res.status(500).json({ error: "Something went wrong" });
   }
 };
@@ -333,7 +333,7 @@ const OrderGetter = async (req, res) => {
 console.log('oredrs to send is the ',data)
     res.send(data);
   } catch (err) {
-    console.log("orderdata send error is ", err);
+    console.log(err.message);
   }
 };
 
@@ -366,7 +366,7 @@ const OrderDelete = async (req, res) => {
       message: "Order deleted successfully",
     });
   } catch (err) {
-    console.log("Error while deleting order ", err);
+    console.log(err.message);
     res.status(500).json({ error: "Something went wrong" });
   }
 };
@@ -450,3 +450,7 @@ export default {
 //     console.log("user cart data error ", err);
 //   }
 // }
+
+
+// CONNECTION_URL=mongodb+srv://karandeepyt786_db_user:karan%40098765@cluster0.n7pqtsz.mongodb.net/E-commerce
+// SERVER_PORT=3000

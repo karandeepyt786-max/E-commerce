@@ -17,14 +17,14 @@ const Home = () => {
 
   const isLogInOut = async () => {
     try {
-      await axios.post("http://localhost:3000/user/isLoginOut", {}, { withCredentials: true }).then((data) => {
+      await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/user/isLoginOut", {}, { withCredentials: true }).then((data) => {
         let resposeuserdata = data.data.data
         dispatch(UserData({ Details: resposeuserdata }))
         console.log("loginout response ", data,dispatch(Userstatus({ status: data.status })))
       })
     }
     catch (err) {
-      console.log("loginout error ", err)
+      console.log(err.message)
     }
   }
 

@@ -17,14 +17,14 @@ const AdminProfile = () => {
 
   const isLogInOutAdmin=async()=>{
     try{
-    await   axios.post("http://localhost:3000/Admin/isLoginOut",{},{withCredentials:true}).then((data)=>{
+    await   axios.post("https://e-commerce-backend-2-zmoo.onrender.com/Admin/isLoginOut",{},{withCredentials:true}).then((data)=>{
 let resposeuserdata=data.data.data
  console.log("loginout Admin response ",dispatch(AdminStatus({status:data.status})))
         dispatch(AdminData({Details:resposeuserdata}))
    })
     }
     catch(err){
-      console.log("loginout Admin error ",err)
+      console.log(err.message)
     }
   }
   useEffect(()=>{
@@ -60,12 +60,12 @@ let resposeuserdata=data.data.data
         </ul>
       </div>
       <Main1/>
-      <Main4 ImageUrl={"http://localhost:3000/Products/1774844789876-gro.jpg"}/>
+      <Main4 ImageUrl={"https://e-commerce-backend-2-zmoo.onrender.com/Products/1774844789876-gro.jpg"}/>
       <Main8/>
  </div>
   )
 }
 
 export default AdminProfile
-{/* <img src="http://localhost:3000/Products/1774844789876-gro.jpg" alt="" srcset="" /> */}
+{/* <img src="https://e-commerce-backend-2-zmoo.onrender.com/Products/1774844789876-gro.jpg" alt="" srcset="" /> */}
 

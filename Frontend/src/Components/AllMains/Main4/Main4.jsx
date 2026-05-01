@@ -16,11 +16,11 @@ const Main4 = () => {
 
     const GetAllProducts = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/Admin/GetAllProducts/0/latest");
+            const res = await axios.get("https://e-commerce-backend-2-zmoo.onrender.com/Admin/GetAllProducts/0/latest");
             setproducts(res.data);
             console.log("all products are ",res)
         } catch (err) {
-            console.log("GetAllProducts error ", err);
+            console.log(err.message);
         }
     };
 

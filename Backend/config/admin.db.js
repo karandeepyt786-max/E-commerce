@@ -6,7 +6,7 @@ const AdminConnection=async()=>{
     console.log("Admin Connection Success")
 }
 catch(err){
-    console.log("error occured")
+    console.log(err.message)
 }
 }
 

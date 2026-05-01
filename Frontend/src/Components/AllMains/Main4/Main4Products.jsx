@@ -20,12 +20,12 @@ const[Sales,setSales]=useState(0)
     console.log("sale setter ",e,key)
     console.log(Sales)
     try{
-   let response=  await  axios.post("http://localhost:3000/Admin/AddSales",{id:key,Sales:Sales},{withCredentials:true})
+   let response=  await  axios.post("https://e-commerce-backend-2-zmoo.onrender.com/Admin/AddSales",{id:key,Sales:Sales},{withCredentials:true})
   //  console.log(response.data)
 
     }
     catch(err){
-      console.log("set sales error is ",err)
+      console.log(err.message)
     }
 
   }
@@ -35,7 +35,7 @@ const[Sales,setSales]=useState(0)
 
     <div className='w-full max-w-[320px] rounded-2xl flex flex-col items-center p-4 bg-white shadow-sm hover:shadow-md transition-shadow gap-4 relative border border-gray-100'>
       <div className="w-full aspect-[4/3] overflow-hidden rounded-xl bg-gray-100">
-        <img src={props.ImageUrl || `http://localhost:3000/Products/${props.ProductImage}`} className='w-full h-full object-cover' alt={props.ProductName} />
+        <img src={props.ImageUrl || `https://e-commerce-backend-2-zmoo.onrender.com/Products/${props.ProductImage}`} className='w-full h-full object-cover' alt={props.ProductName} />
       </div>
       
       <div className="w-full flex flex-col gap-2">

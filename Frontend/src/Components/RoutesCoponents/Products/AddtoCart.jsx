@@ -12,12 +12,12 @@ const Cart = (props) => {
 
   const sendingData=async()=>{
       try{
-const CartSending=await axios.patch("http://localhost:3000/user/Cart",{},{withCredentials:true})
+const CartSending=await axios.patch("https://e-commerce-backend-2-zmoo.onrender.com/user/Cart",{},{withCredentials:true})
 console.log("CartSending is ",CartSending.data)
 setNowwork(Nowwork)
 }
 catch(err){
-  console.log("CartSending is ",err)
+  console.log(err.message)
 
 }
   }
@@ -54,7 +54,7 @@ sendingData()
         console.log("Productid in AddtoCart is  ",props.Productid)
 
     try {
-      const CartSending = await axios.patch("http://localhost:3000/user/Cart",
+      const CartSending = await axios.patch("https://e-commerce-backend-2-zmoo.onrender.com/user/Cart",
          { 
 
           Email: props.Email,
@@ -68,7 +68,7 @@ sendingData()
       console.log("Userdata from the Product Cart is ",props.UserCartData)
     }
     catch (err) {
-      console.log("error while adding user cart ", err)
+      console.log(err.message)
     }
   }
 
@@ -87,7 +87,7 @@ sendingData()
 
           <div className="Box3 flex mt-8 mb-10 flex-wrap justify-center gap-6">
 
-            <div className="ImageBox"><img src={`http://localhost:3000/Products/${props.ProductImage}`} className='w-[200px] h-[150px]' alt="" srcset="" /></div>
+            <div className="ImageBox"><img src={`https://e-commerce-backend-2-zmoo.onrender.com/Products/${props.ProductImage}`} className='w-[200px] h-[150px]' alt="" srcset="" /></div>
 
             <div className="DetailsBox pl-3 flex flex-col gap-1">
 

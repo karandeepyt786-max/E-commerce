@@ -106,11 +106,11 @@ console.log("OrderData from the checkout ", (OrderData[0])," UserAllInformation 
         e.preventDefault()
       
         try {
-            const data = await axios.post("http://localhost:3000/user/Order", { UserAllInformation: UserAllInformation,ProductData:datas,productidis:productidis,Quantity:OrderData[0].ProductQuantity }, { withCredentials: true })
+            const data = await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/user/Order", { UserAllInformation: UserAllInformation,ProductData:datas,productidis:productidis,Quantity:OrderData[0].ProductQuantity }, { withCredentials: true })
             console.log("Add To Order ", data.data)
         }
         catch (err) {   
-            console.log("error while adding order is ", err)
+            console.log(err.message)
         }
     }
 
@@ -210,7 +210,7 @@ console.log("OrderData from the checkout ", (OrderData[0])," UserAllInformation 
                             <div className="flex items-center gap-4">
                                 <div className="w-20 h-24 bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex-shrink-0">
                                     <img 
-                                      src={`http://localhost:3000/Products/${datas.ProductImage}`} 
+                                      src={`https://e-commerce-backend-2-zmoo.onrender.com/Products/${datas.ProductImage}`} 
                                       className='w-full h-full object-cover' 
                                       alt="Product" 
                                     />
