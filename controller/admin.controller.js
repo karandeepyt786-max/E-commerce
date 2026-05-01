@@ -52,32 +52,46 @@ const signinAdmin = async (req, res) => {
   const isEmailExist = await AdminSignUp.findOne({ emailAddress: Email });
 
   if (isEmailExist) {
-    let ispassword = bcrypt.compare(Password, isEmailExist.password);
+    let ispassword = await bcrypt.compare(Password, isEmailExist.password);
     if (isEmailExist && ispassword) {
       console.log("authorization succeed");
+      let token = jwt.sign({ email: Email }, "key");
+      res.cookie("Admintoken", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/",
+      });
+      return res.status(200).json({ status: 200, message: "signin success", Email: Email });
     } else {
-      console.log("Email and Password not match");
+      return res.status(300).json({ status: 300, message: "Email and Password not match" });
     }
   } else {
-    res.status(300).send("Email and Password not match");
+    return res.status(300).json({ status: 300, message: "Email and Password not match" });
   }
-
-  console.log("Email exist ", req.body, isEmailExist);
 };
 
 const loginoutAdmin = async (req, res) => {
-  // console.log("token is ",req.cookies.token)
+  try {
+    // console.log("token is ",req.cookies.token)
+    if (!req.cookies.Admintoken) {
+      return res.status(401).json({ status: 401, message: "No token provided" });
+    }
 
-  let Istoken = jwt.verify(req.cookies.Admintoken, "key");
+    let Istoken = jwt.verify(req.cookies.Admintoken, "key");
 
-  // console.log(Istoken.email)
+    // console.log(Istoken.email)
 
-  let userdata = await AdminSignUp.findOne({ emailAddress: Istoken.email });
+    let userdata = await AdminSignUp.findOne({ emailAddress: Istoken.email });
 
-  if (Istoken) {
-    res.status(200).send({ data: userdata });
-  } else {
-    res.status(401).send("Invalid token");
+    if (Istoken) {
+      return res.status(200).json({ status: 200, data: userdata });
+    } else {
+      return res.status(401).json({ status: 401, message: "Invalid token" });
+    }
+  } catch (err) {
+    console.log("loginoutAdmin error: ", err.message);
+    return res.status(401).json({ status: 401, message: "Invalid token or error" });
   }
 };
 
@@ -146,37 +160,43 @@ const GetAllProducts = async (req, res) => {
   console.log(req.params.id);
   console.log(req.params.sort);
   try {
-    const latest = await ProductsSchema.find()
-      .skip(9 * Number(req.params.id))
-      .limit(9);
-    req.params.sort == "latest" && res.send(latest);
+    let products;
+    
+    if (req.params.sort == "latest") {
+      products = await ProductsSchema.find()
+        .skip(9 * Number(req.params.id))
+        .limit(9);
+    } else if (req.params.sort == "low") {
+      products = await ProductsSchema.find()
+        .sort({ ProductPrice: 1 })
+        .skip(9 * Number(req.params.id))
+        .limit(9);
+    } else if (req.params.sort == "high") {
+      products = await ProductsSchema.find()
+        .sort({ ProductPrice: -1 })
+        .skip(9 * Number(req.params.id))
+        .limit(9);
+    } else if (req.params.sort == "popular") {
+      products = await ProductsSchema.find()
+        .sort({ ProductRating: -1 })
+        .skip(9 * Number(req.params.id))
+        .limit(9);
+    } else if (req.params.sort == "sales") {
+      products = await ProductsSchema.find()
+        .sort({ ProductSale: 1 })
+        .skip(9 * Number(req.params.id))
+        .limit(9);
+    } else {
+      products = await ProductsSchema.find()
+        .skip(9 * Number(req.params.id))
+        .limit(9);
+    }
 
-    let lowprice = await ProductsSchema.find()
-      .sort({ ProductPrice: 1 })
-      .skip(9 * Number(req.params.id))
-      .limit(9);
-    req.params.sort == "low" && res.send(lowprice);
-
-    let highprice = await ProductsSchema.find()
-      .sort({ ProductPrice: -1 })
-      .skip(9 * Number(req.params.id))
-      .limit(9);
-    req.params.sort == "high" && res.send(highprice);
-
-    let Rating = await ProductsSchema.find()
-      .sort( { ProductRating: -1 } )
-      .skip(9 * Number(req.params.id))
-      .limit(9);
-    req.params.sort == "popular" && res.send(Rating);
-
-    let Sales = await ProductsSchema.find()
-      .sort( { ProductSale: 1 } )
-      .skip(9 * Number(req.params.id))
-      .limit(9);
-    req.params.sort == "sales" && res.send(Sales);
+    return res.status(200).json(products);
 
   } catch (err) {
-    res.send("getallproducts errr is ", err);
+    console.log("getallproducts error: ", err);
+    return res.status(500).json({ message: "getallproducts error: " + err.message });
   }
 };
 

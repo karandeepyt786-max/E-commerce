@@ -38,6 +38,7 @@ cloudinary.config({
 let UploadingPath = path.join(
   process.cwd(),
   "Public/Images/uploads/1774914907559-Luffy.jpg",
+  
 );
 
 // uploadImage(UploadingPath);

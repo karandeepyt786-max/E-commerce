@@ -54,29 +54,44 @@ const signinUser = async (req, res) => {
     let ispassword = await bcrypt.compare(Password, isEmailExist.password);
     if (isEmailExist && ispassword) {
       console.log("authorization succeed");
+      let token = jwt.sign({ email: Email }, "key");
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/",
+      });
+      return res.status(200).json({ status: 200, message: "signin success", Email: Email });
     } else {
-      console.log("Email and Password not match");
+      return res.status(300).json({ status: 300, message: "Email and Password not match" });
     }
   } else {
-    res.status(300).send("Email and Password not match");
+    return res.status(300).json({ status: 300, message: "Email and Password not match" });
   }
-
-  console.log("Email exist ", req.body, isEmailExist);
 };
 
 const loginout = async (req, res) => {
-  console.log("token is ", req.cookies.token);
+  try {
+    console.log("token is ", req.cookies.token);
 
-  let Istoken = jwt.verify(req.cookies.token, "key");
+    if (!req.cookies.token) {
+      return res.status(401).json({ status: 401, message: "No token provided" });
+    }
 
-  console.log(Istoken.email);
+    let Istoken = jwt.verify(req.cookies.token, "key");
 
-  let userdata = await userSignUp.findOne({ emailAddress: Istoken.email });
+    console.log(Istoken.email);
 
-  if (Istoken) {
-    res.status(200).send({ data: userdata });
-  } else {
-    res.status(401).send("Invalid token");
+    let userdata = await userSignUp.findOne({ emailAddress: Istoken.email });
+
+    if (Istoken) {
+      return res.status(200).json({ status: 200, data: userdata });
+    } else {
+      return res.status(401).json({ status: 401, message: "Invalid token" });
+    }
+  } catch (err) {
+    console.log("loginout error: ", err.message);
+    return res.status(401).json({ status: 401, message: "Invalid token or error" });
   }
 };
 
