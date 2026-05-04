@@ -45,7 +45,7 @@ const[HoursRound,setHoursRound]=useState(0)
 
   const sendingData = async () => {
     try {
-      const CartSending = await axios.patch("https://e-commerce-backend-2-zmoo.onrender.com/user/Cart", {
+      const CartSending = await axios.patch("https://e-commerce-14z8.onrender.com/user/Cart", {
          Email: Email,
           ProductQuantity: forsubtotal,
           Productid:props.Productid,
@@ -91,7 +91,7 @@ const[HoursRound,setHoursRound]=useState(0)
 
     const isLogInOut = async () => {
     try {
-      await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/user/isLoginOut", {}, { withCredentials: true }).then((data) => {
+      await axios.post("https://e-commerce-14z8.onrender.com/user/isLoginOut", {}, { withCredentials: true }).then((data) => {
         let resposeuserdata = data.data.data.emailAddress
         setEmail(resposeuserdata)
         console.log("loginout response ", resposeuserdata)

@@ -44,7 +44,7 @@ const CreateProduct = () => {
 
         if (CreatorAdmin) {
             try {
-                await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/Admin/CreateProduct", { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductStock: ProductStock }, {
+                await axios.post("https://e-commerce-14z8.onrender.com/Admin/CreateProduct", { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductStock: ProductStock }, {
                     withCredentials: true, headers: {
                         "Content-Type": "multipart/form-data"
                     }

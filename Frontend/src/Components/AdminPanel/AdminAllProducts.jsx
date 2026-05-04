@@ -12,7 +12,7 @@ const AdminAllProducts = () => {
 
     const GetAllProducts = async () => {
         try {
-            const res = await axios.get("https://e-commerce-backend-2-zmoo.onrender.com/Admin/GetAllProducts/1/latest");
+            const res = await axios.get("https://e-commerce-14z8.onrender.com/Admin/GetAllProducts/1/latest");
             setproducts(res.data);
         } catch (err) {
             console.log(err.message);

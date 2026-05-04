@@ -35,7 +35,7 @@ const Signup = () => {
 
         if (formData && confirmEmail) {
             try {
-                await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/user/signup",
+                await axios.post("https://e-commerce-14z8.onrender.com/user/signup",
                     {
                         firstName: formData.get("firstName"),
                         lastName: formData.get("lastName"),

@@ -19,7 +19,7 @@ const Right = () => {
      
      
         try {
-                const res = await axios.get(`https://e-commerce-backend-2-zmoo.onrender.com/Admin/GetAllProducts/${Paramspage}/${ e?.target?.value?e.target.value:"latest"}`);
+                const res = await axios.get(`https://e-commerce-14z8.onrender.com/Admin/GetAllProducts/${Paramspage}/${ e?.target?.value?e.target.value:"latest"}`);
             setproducts(res.data);
         } catch (err) {
             console.log(err.message);
@@ -28,7 +28,7 @@ const Right = () => {
 
         const SortSubmit=async(e)=>{
 
-const response=await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/Admin/SortingProduct",{sortBy:e.target.value})
+const response=await axios.post("https://e-commerce-14z8.onrender.com/Admin/SortingProduct",{sortBy:e.target.value})
 set
         console.log("response for price is ",response.data)
       setproducts(response.data)

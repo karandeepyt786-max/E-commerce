@@ -18,7 +18,7 @@ const ProfileData = (props) => {
 
   const Logout = async () => {
     try {
-      await axios.post("https://e-commerce-backend-2-zmoo.onrender.com/User/logout", {}, { withCredentials: true }).then((data) => {
+      await axios.post("https://e-commerce-14z8.onrender.com/User/logout", {}, { withCredentials: true }).then((data) => {
         console.log("logout data is ", data)
       }).catch((err) => {
         console.log(err.message)
