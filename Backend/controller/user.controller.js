@@ -7,66 +7,73 @@ import { ObjectId } from "bson";
 userSignUp();
 
 const createUser = async (req, res) => {
-  const { firstName, lastName, Email, Phone, Password } = req.body;
+  try {
+    const { firstName, lastName, Email, Phone, Password } = req.body;
 
-  const salt = await bcrypt.genSalt(10);
+    if (!Password) {
+      return res.status(400).json({ status: 400, message: "Password is required" });
+    }
 
-  const hash = await bcrypt.hash(Password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(Password, salt);
 
-  const isExist = await userSignUp.findOne({ emailAddress: Email });
+    const isExist = await userSignUp.findOne({ emailAddress: Email });
 
-  let token = jwt.sign({ email: Email }, "key");
+    let token = jwt.sign({ email: Email }, "key");
 
-  // const compare=await bcrypt.compare("z","$2b$10$qXlC.5AIUmvHWooXTN98Te4cvmPz8OVBz5pLHpLZa14x.IiUrEeXi")
+    if (hash && !isExist) {
+      const User = await userSignUp.create({
+        firstName,
+        lastName,
+        emailAddress: Email,
+        phoneNumber: Phone,
+        password: hash,
+      });
 
-  // console.log("compare ",compare)
-
-  if (hash && !isExist) {
-    const User = await userSignUp.create({
-      firstName,
-      lastName,
-      emailAddress: Email,
-      phoneNumber: Phone,
-      password: hash,
-    });
-
-    console.log("user created");
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      path: "/",
-    });
-    return res
-      .status(200)
-      .json({ status: 200, message: "user created", user: User, Email: Email });
-  } else {
-    console.log("already exist");
-    return res.status(409).json({ status: 409, message: "user already exist" });
+      console.log("user created");
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: true, // Should be true for cross-site cookies
+        sameSite: "none", // Required for cross-origin cookies in production
+        path: "/",
+      });
+      return res.status(200).json({ status: 200, message: "user created", user: User, Email: Email });
+    } else {
+      console.log("already exist");
+      return res.status(409).json({ status: 409, message: "user already exist" });
+    }
+  } catch (error) {
+    console.error("Signup error:", error);
+    return res.status(500).json({ status: 500, message: error.message || "Internal Server Error" });
   }
 };
 
 const signinUser = async (req, res) => {
-  const { Email, Password } = req.body;
-  const isEmailExist = await userSignUp.findOne({ emailAddress: Email });
+  try {
+    const { Email, Password } = req.body;
+    const isEmailExist = await userSignUp.findOne({ emailAddress: Email });
 
-  if (isEmailExist) {
-    let ispassword = await bcrypt.compare(Password, isEmailExist.password);
-    if (isEmailExist && ispassword) {
-      console.log("authorization succeed");
-      let token = jwt.sign({ email: Email }, "key");
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: "lax",
-        path: "/",
-      });
-      return res.status(200).json({ status: 200, message: "signin success", Email: Email });
+    if (isEmailExist) {
+      let ispassword = await bcrypt.compare(Password, isEmailExist.password);
+      if (isEmailExist && ispassword) {
+        console.log("authorization succeed");
+        let token = jwt.sign({ email: Email }, "key");
+        res.cookie("token", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "none",
+          path: "/",
+        });
+        return res.status(200).json({ status: 200, message: "signin success", Email: Email });
+      } else {
+        return res.status(300).json({ status: 300, message: "Email and Password not match" });
+      }
     } else {
       return res.status(300).json({ status: 300, message: "Email and Password not match" });
     }
-  } else {
-    return res.status(300).json({ status: 300, message: "Email and Password not match" });
+  } catch (error) {
+    console.error("Signin error:", error);
+    return res.status(500).json({ status: 500, message: error.message || "Internal Server Error" });
   }
 };
 
