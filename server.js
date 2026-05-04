@@ -31,9 +31,9 @@ ProductsSchema()
 //Cloud Services
 
 cloudinary.config({
-  cloud_name: "dmgfdlixw",
-  api_key: "447866952441655",
-  api_secret: "Wb_BOmtpRCgrnvwtFuUFBO6r3fU",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 let UploadingPath = path.join(
   process.cwd(),
@@ -46,7 +46,11 @@ let UploadingPath = path.join(
 // emptyDirectory(dirPath);
 
 //Middleware
-app.use(cors({ origin: "https://e-commerce-frontend-3-494c.vercel.app", credentials: true }));
+const allowedOrigins = [
+  "https://e-commerce-frontend-3-494c.vercel.app",
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -63,7 +67,8 @@ app.use("/", (req, res) => {
   console.log("port is ",process.env.SERVER_PORT)
 });
 
-app.listen(process.env.SERVER_PORT);
+const PORT = process.env.SERVER_PORT || process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 
 // CONNECTION_URL=mongodb://localhost:27017/   
