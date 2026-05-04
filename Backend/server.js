@@ -22,9 +22,16 @@ let dirPath = path.join(process.cwd(), "Public/Images/uploads/");
 
 import mongoose from "mongoose";
 import ProductsSchema from "./model/product.model.js";
+import fsSync from "fs";
 
-// Initialize models
-ProductsSchema();
+// Initialize models - ProductsSchema is a model, not a function
+// ProductsSchema(); 
+
+// Ensure uploads directory exists
+const uploadsDir = path.join(process.cwd(), "Public/Images/uploads/");
+if (!fsSync.existsSync(uploadsDir)) {
+  fsSync.mkdirSync(uploadsDir, { recursive: true });
+}
 
 // Establish single Database Connection
 if (!process.env.CONNECTION_URL) {

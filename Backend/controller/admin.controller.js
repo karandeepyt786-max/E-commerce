@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import AdminSignUp from "../model/admin.signup.js";
 import { ObjectId } from "mongodb";
 import ProductsSchema from "../model/product.model.js";
-import { uploadImage } from "./Cloudinary.js";
 
 AdminSignUp();
 
@@ -107,6 +106,7 @@ const Logout = async (req, res) => {
 };
 
 const CreateProduct = async (req, res) => {
+  console.log("CreateProduct request received:", req.body);
   try {
     const {
       BrandName,
@@ -122,44 +122,52 @@ const CreateProduct = async (req, res) => {
     } = req.body;
 
     if (!req.file) {
+      console.log("Missing file");
       return res.status(400).send("Product image is required");
     }
 
-    // Upload to Cloudinary instead of using local file
-    const imageUrl = await uploadImage(req.file.path);
+    const imagePath = req.file.filename;
+
+    // Handle potential array inputs that might come as single strings or arrays
+    const parseArray = (input) => {
+      if (!input) return [];
+      if (Array.isArray(input)) return input;
+      return [input];
+    };
 
     const updatedProduct = await ProductsSchema.findOneAndUpdate(
-      { ProductName: ProductName }, // 🔍 match condition
+      { ProductName: ProductName },
       {
         ProductCreatorEmail: CreatorAdmin,
         ProductBrand: BrandName,
         ProductName: ProductName,
-        ProductImage: imageUrl, // Save Cloudinary URL to DB
-        ProductPrice: ProductPrice,
+        ProductImage: imagePath,
+        ProductPrice: Number(ProductPrice) || 0,
         ProductCategory: ProductCategory,
         ProductSale: 0,
         ProductRating: 0,
         ProductReviews: 0,
-        ProductStock: ProductStock,
-        SizeAvailable: Size,
-        ColorAvailable: ProductColors,
-        Tags: ProductTags,
-        DiscountCode: ProductCode,
+        ProductStock: Number(ProductStock) || 0,
+        SizeAvailable: parseArray(Size),
+        ColorAvailable: parseArray(ProductColors),
+        Tags: parseArray(ProductTags),
+        DiscountCode: Number(ProductCode) || 0,
       },
       {
-        new: true,      // return updated doc
-        upsert: true,   // 🔥 create if not exists
+        new: true,
+        upsert: true,
       }
     );
 
-    res.status(200).send({
+    console.log("Product created/updated successfully");
+    res.status(200).json({
       message: "Product created/updated successfully",
       product: updatedProduct,
     });
 
   } catch (err) {
-    console.log("Create Product Error:", err);
-    res.status(500).send("Server error");
+    console.error("Create Product Error details:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
   }
 };
 
