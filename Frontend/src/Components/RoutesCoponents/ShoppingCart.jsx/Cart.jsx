@@ -175,7 +175,7 @@ useEffect(()=>{
               
               {/* Product Info */}
               <div className="flex gap-4 items-center">
-                <img src={`https://e-commerce-14z8.onrender.com/Products/${ite.ProductDataById.ProductImage}`} className='w-20 h-24 object-cover rounded-lg' alt={ite.ProductDataById.ProductName} />
+                <img src={ite.ProductDataById.ProductImage?.startsWith('http') ? ite.ProductDataById.ProductImage : 'https://e-commerce-14z8.onrender.com/Products/' + ite.ProductDataById.ProductImage} className='w-20 h-24 object-cover rounded-lg' alt={ite.ProductDataById.ProductName} />
                 <div className="flex flex-col gap-1">
                   <div className="font-bold text-[#484848] volkhov">{ite.ProductDataById.ProductName}</div>
                   <div className="text-xs text-gray-400">Color: {ite.Color}</div>

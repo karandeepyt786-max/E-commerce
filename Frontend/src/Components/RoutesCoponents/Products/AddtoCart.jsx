@@ -87,7 +87,7 @@ sendingData()
 
           <div className="Box3 flex mt-8 mb-10 flex-wrap justify-center gap-6">
 
-            <div className="ImageBox"><img src={`https://e-commerce-14z8.onrender.com/Products/${props.ProductImage}`} className='w-[200px] h-[150px]' alt="" srcset="" /></div>
+            <div className="ImageBox"><img src={props.ProductImage?.startsWith('http') ? props.ProductImage : 'https://e-commerce-14z8.onrender.com/Products/' + props.ProductImage} className='w-[200px] h-[150px]' alt="" srcset="" /></div>
 
             <div className="DetailsBox pl-3 flex flex-col gap-1">
 

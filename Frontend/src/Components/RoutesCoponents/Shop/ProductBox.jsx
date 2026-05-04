@@ -35,7 +35,7 @@ const OneProductGet = async (e) => {
         <div className="group flex flex-col gap-3 cursor-pointer" onClick={(e)=>{OneProductGet(e)}}>
             <div className="relative w-full aspect-[3/4] rounded-2xl overflow-hidden bg-gray-100">
                 <div className={`${props.Productname} absolute inset-0 z-10 transition-colors group-hover:bg-black/5`}></div>
-                <div className="w-full h-full flex items-center justify-center bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style={{backgroundImage:`url(https://e-commerce-14z8.onrender.com/Products/${props.ImageUrl})`}}>
+                <div className="w-full h-full flex items-center justify-center bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style={{backgroundImage:`url(${props.ImageUrl?.startsWith('http') ? props.ImageUrl : 'https://e-commerce-14z8.onrender.com/Products/' + props.ImageUrl})`}}>
                     {props.ProductStock === 0 && (
                         <div className="z-20 w-16 h-16 bg-black/60 rounded-full flex flex-col items-center justify-center text-white text-[10px] font-bold uppercase tracking-wider backdrop-blur-sm">
                             <span>Sold</span>

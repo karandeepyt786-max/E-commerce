@@ -12,7 +12,7 @@ const Left = (props) => {
       </div>
       <div className="flex-grow bg-gray-50 rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-square lg:aspect-[4/5]">
         <img 
-          src={`https://e-commerce-14z8.onrender.com/Products/${props.imgSrc}`} 
+          src={props.imgSrc?.startsWith('http') ? props.imgSrc : 'https://e-commerce-14z8.onrender.com/Products/' + props.imgSrc} 
           className='w-full h-full object-cover hover:scale-110 transition-transform duration-500' 
           alt="Main Product" 
         />

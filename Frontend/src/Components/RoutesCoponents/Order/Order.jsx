@@ -89,7 +89,7 @@ const Order = () => {
             <div key={index} className='w-full max-w-[300px] bg-white rounded-3xl p-5 shadow-sm border border-gray-100 flex flex-col gap-4 hover:shadow-md transition-shadow relative'>
               <div className="w-full aspect-[4/3] overflow-hidden rounded-2xl bg-gray-50">
                 <img
-                  src={`https://e-commerce-14z8.onrender.com/Products/${ite.product.ProductImage}`}
+                  src={ite.product.ProductImage?.startsWith('http') ? ite.product.ProductImage : 'https://e-commerce-14z8.onrender.com/Products/' + ite.product.ProductImage}
                   className='w-full h-full object-cover'
                   alt={ite.product.ProductName}
                 />

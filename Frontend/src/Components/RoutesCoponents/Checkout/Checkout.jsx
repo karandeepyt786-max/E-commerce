@@ -210,7 +210,7 @@ console.log("OrderData from the checkout ", (OrderData[0])," UserAllInformation 
                             <div className="flex items-center gap-4">
                                 <div className="w-20 h-24 bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 flex-shrink-0">
                                     <img 
-                                      src={`https://e-commerce-14z8.onrender.com/Products/${datas.ProductImage}`} 
+                                      src={datas.ProductImage?.startsWith('http') ? datas.ProductImage : 'https://e-commerce-14z8.onrender.com/Products/' + datas.ProductImage} 
                                       className='w-full h-full object-cover' 
                                       alt="Product" 
                                     />
