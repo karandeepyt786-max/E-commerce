@@ -103,7 +103,12 @@ const loginout = async (req, res) => {
 };
 
 const Logout = async (req, res) => {
-  res.cookie("token", "");
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
+  });
   res.status(200).send("successfully delete the cookie");
 };
 

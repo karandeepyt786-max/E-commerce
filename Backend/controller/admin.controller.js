@@ -96,7 +96,12 @@ const loginoutAdmin = async (req, res) => {
 };
 
 const Logout = async (req, res) => {
-  res.cookie("Admintoken", "");
+  res.clearCookie("Admintoken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
+  });
   res.status(200).send("successfully delete the cookie");
 };
 
