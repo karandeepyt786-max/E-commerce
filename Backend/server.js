@@ -32,10 +32,7 @@ if (!process.env.CONNECTION_URL) {
   process.exit(1);
 }
 
-mongoose.connect(process.env.CONNECTION_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => {
+mongoose.connect(process.env.CONNECTION_URL).then(() => {
   console.log("✅ Successfully connected to MongoDB Atlas!");
 }).catch((err) => {
   console.error("❌ MongoDB connection error:", err.message);
