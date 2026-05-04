@@ -34,10 +34,10 @@ const createAdmin = async (req, res) => {
 
     console.log("user created");
     res.cookie("Admintoken", token, {
-      httpOnly: true, // Required for security
-      secure: false, // REQUIRED for http://localhost (Chrome blocks 'true' on HTTP)
-      sameSite: "lax", // REQUIRED for cross-port (5173 to 3000)
-      path: "/", // REQUIRED to make it available to all routes
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      path: "/",
     });
     res.status(200).send("user created");
   } else {
@@ -58,8 +58,8 @@ const signinAdmin = async (req, res) => {
       let token = jwt.sign({ email: Email }, "key");
       res.cookie("Admintoken", token, {
         httpOnly: true,
-        secure: false,
-        sameSite: "lax",
+        secure: true,
+        sameSite: "none",
         path: "/",
       });
       return res.status(200).json({ status: 200, message: "signin success", Email: Email });
