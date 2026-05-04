@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import AdminSignUp from "../model/admin.signup.js";
 import { ObjectId } from "mongodb";
 import ProductsSchema from "../model/product.model.js";
+import { uploadImage } from "./Cloudinary.js";
 
 AdminSignUp();
 
@@ -124,7 +125,8 @@ const CreateProduct = async (req, res) => {
       return res.status(400).send("Product image is required");
     }
 
-    const imagePath = req.file.filename;
+    // Upload to Cloudinary instead of using local file
+    const imageUrl = await uploadImage(req.file.path);
 
     const updatedProduct = await ProductsSchema.findOneAndUpdate(
       { ProductName: ProductName }, // 🔍 match condition
@@ -132,7 +134,7 @@ const CreateProduct = async (req, res) => {
         ProductCreatorEmail: CreatorAdmin,
         ProductBrand: BrandName,
         ProductName: ProductName,
-        ProductImage: imagePath,
+        ProductImage: imageUrl, // Save Cloudinary URL to DB
         ProductPrice: ProductPrice,
         ProductCategory: ProductCategory,
         ProductSale: 0,

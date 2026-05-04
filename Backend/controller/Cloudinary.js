@@ -22,9 +22,7 @@ const emptyDirectory = async (dirPath) => {
 
 
 
-const uploadImage = async (UploadingPath,dirPath) => {
-  // Use the uploaded file's name as the asset's public ID and
-  // allow overwriting the asset with new versions
+const uploadImage = async (UploadingPath) => {
   const options = {
     use_filename: true,
     unique_filename: true,
@@ -32,15 +30,12 @@ const uploadImage = async (UploadingPath,dirPath) => {
   };
 
   try {
-    console.log("1");
-    // Upload the image
     const result = await cloudinary.uploader.upload(UploadingPath, options);
-    console.log("2");
-    console.log("cloudinary response ", result);
-    console.log("Public id is ", result.public_id);
+    return result.secure_url; // Return the hosted URL
   } catch (err) {
-    console.error(err.message);
+    console.error("Cloudinary Error: ", err.message);
+    throw err;
   }
 };
 
-export { uploadImage ,emptyDirectory};
+export { uploadImage, emptyDirectory };
