@@ -20,13 +20,26 @@ import { uploadImage, emptyDirectory } from "./controller/Cloudinary.js";
 //Paths
 let dirPath = path.join(process.cwd(), "Public/Images/uploads/");
 
-//DB Connection
-import Connection from "./config/user.db.js";
-import AdminConnection from "./config/admin.db.js";
+import mongoose from "mongoose";
 import ProductsSchema from "./model/product.model.js";
-Connection();
-AdminConnection();
-ProductsSchema()
+
+// Initialize models
+ProductsSchema();
+
+// Establish single Database Connection
+if (!process.env.CONNECTION_URL) {
+  console.error("FATAL ERROR: CONNECTION_URL environment variable is missing!");
+  process.exit(1);
+}
+
+mongoose.connect(process.env.CONNECTION_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log("✅ Successfully connected to MongoDB Atlas!");
+}).catch((err) => {
+  console.error("❌ MongoDB connection error:", err.message);
+});
 
 //Cloud Services
 
