@@ -31,44 +31,41 @@ const CreateProduct = () => {
 
     const Formhandler = async (e) => {
         e.preventDefault();
+        console.log("Submitting form...");
 
-
-
-        // formData.append("BrandName", BrandName)
-        // formData.append("ProductName", ProductName)
-        // formData.append("ProductPrice", ProductPrice)
-        // formData.append("ProductCategory", ProductCategory)
-        // formData.append("ProductImage", ProductImage)
-
-
-
-        if (CreatorAdmin) {
-            try {
-                await axios.post("https://e-commerce-14z8.onrender.com/Admin/CreateProduct", { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductStock: ProductStock }, {
-                    withCredentials: true, headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                }).then((data) => {
-                    console.log("create product data ", data)
-                        .catch((err) => {
-                            console.log(err.message)
-                        })
-                })
-console.log(
-    { CreatorAdmin: CreatorAdmin, BrandName: BrandName, ProductName: ProductName, ProductPrice: ProductPrice, ProductCategory: ProductCategory, ProductImage: ProductImage, Size: Size, ProductColors: ProductColors, ProductTags: ProductTags, ProductCode: ProductCode, ProductStock: ProductStock }
-
-)
-
-
-                console.log(formData.get("mobile"))
-            }
-            catch (err) {
-                console.log(err.message)
-            }
+        if (!CreatorAdmin) {
+            console.error("No CreatorAdmin found");
+            return;
         }
 
+        const formData = new FormData();
+        formData.append("CreatorAdmin", CreatorAdmin);
+        formData.append("BrandName", BrandName);
+        formData.append("ProductName", ProductName);
+        formData.append("ProductPrice", ProductPrice);
+        formData.append("ProductCategory", ProductCategory);
+        formData.append("ProductImage", ProductImage); // This is the File object
+        formData.append("ProductStock", ProductStock);
+        formData.append("ProductCode", ProductCode);
+        
+        // Arrays handled by appending same key multiple times
+        Size.forEach(s => formData.append("Size", s));
+        ProductColors.forEach(c => formData.append("ProductColors", c));
+        ProductTags.forEach(t => formData.append("ProductTags", t));
 
-        console.log(BrandName, ProductName, ProductPrice, ProductCategory, ProductImage)
+        try {
+            const response = await axios.post("https://e-commerce-14z8.onrender.com/Admin/CreateProduct", formData, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+            console.log("Product created successfully:", response.data);
+            alert("Product created successfully!");
+        } catch (err) {
+            console.error("Error creating product:", err.response ? err.response.data : err.message);
+            alert("Error creating product: " + (err.response ? err.response.data : err.message));
+        }
     }
 
     return (

@@ -35,7 +35,7 @@ const[Sales,setSales]=useState(0)
 
     <div className='w-full max-w-[320px] rounded-2xl flex flex-col items-center p-4 bg-white shadow-sm hover:shadow-md transition-shadow gap-4 relative border border-gray-100'>
       <div className="w-full aspect-[4/3] overflow-hidden rounded-xl bg-gray-100">
-        <img src={props.ImageUrl || `https://e-commerce-14z8.onrender.com/Products/${props.ProductImage}`} className='w-full h-full object-cover' alt={props.ProductName} />
+        <img src={props.ProductImage?.startsWith('http') ? props.ProductImage : `https://e-commerce-14z8.onrender.com/Products/${props.ProductImage}`} className='w-full h-full object-cover' alt={props.ProductName} />
       </div>
       
       <div className="w-full flex flex-col gap-2">

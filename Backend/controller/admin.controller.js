@@ -3,6 +3,9 @@ import bcrypt from "bcrypt";
 import AdminSignUp from "../model/admin.signup.js";
 import { ObjectId } from "mongodb";
 import ProductsSchema from "../model/product.model.js";
+import { uploadImage } from "./Cloudinary.js";
+import fs from "fs/promises";
+import path from "path";
 
 AdminSignUp();
 
@@ -121,12 +124,18 @@ const CreateProduct = async (req, res) => {
       ProductTags,
     } = req.body;
 
-    if (!req.file) {
-      console.log("Missing file");
-      return res.status(400).send("Product image is required");
-    }
+    const localFilePath = path.join(process.cwd(), "Public/Images/uploads/", req.file.filename);
+    
+    // Upload to Cloudinary
+    const cloudinaryResult = await uploadImage(localFilePath);
+    const imagePath = cloudinaryResult.secure_url;
 
-    const imagePath = req.file.filename;
+    // Delete local file after upload
+    try {
+      await fs.unlink(localFilePath);
+    } catch (unlinkErr) {
+      console.warn("Failed to delete local file:", unlinkErr.message);
+    }
 
     // Handle potential array inputs that might come as single strings or arrays
     const parseArray = (input) => {
